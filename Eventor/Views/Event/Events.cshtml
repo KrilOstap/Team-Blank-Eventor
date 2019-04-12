@@ -1,0 +1,45 @@
+﻿@model IEnumerable<EventModel>
+@{
+    ViewData["Title"] = "Events";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <h3>Events</h3>
+    </div>  
+</div>
+
+<div class="row card-columns">
+    @foreach (var eventModel in Model)
+    {
+        <div class="col-md-3">
+            <div class="card">
+                @if (!string.IsNullOrEmpty(eventModel.ImagePath))
+                {
+                    <img class="h-50 card-img-top" src="~/Images/@eventModel.ImagePath" alt="Card image cap">
+                }
+                else
+                {
+                    <img class="h-50 card-img-top" src="~/Images/default.png" alt="Card image cap">
+                }
+                    <div class="card-body">
+                        <h4 class="card-title">@eventModel.Title</h4>
+
+                        <p class="card-text text-justify">@eventModel.Description</p>
+                        <a href="/event/description/@eventModel" class="btn btn-success">Open</a>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Organizer"))
+                            {
+                                <a href="/event/edit/@eventModel.Id" class="btn btn-info">Edit</a>
+                                <a href="/event/remove/eventModel.Id" class="btn btn-danger">Remove</a>
+                                <a href="/event/subscribe/eventModel.Id" class="btn btn-success">Subscribe</a>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+</div>
