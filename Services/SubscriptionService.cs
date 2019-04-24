@@ -38,7 +38,7 @@ namespace Services
             return mapper.Map<Subscription, SubscriptionDTO>(repository.GetById(id));
         }
 
-        public IEnumerable<SubscriptionDTO> GetEvents(string id)
+        public IEnumerable<SubscriptionDTO> GetSubscriptions(string id)
         {
            var subscriptions = repository.GetAll().Where(s => s.OrganizerId == id);
             return mapper.Map<IEnumerable<Subscription>, IEnumerable<SubscriptionDTO>>(subscriptions);
