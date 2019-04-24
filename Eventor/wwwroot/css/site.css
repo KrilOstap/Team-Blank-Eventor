@@ -18,8 +18,13 @@ html {
   }
 }
 
+.carousel-item img {
+    width: 100%;
+    height: 90vh
+}
+
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
@@ -53,4 +58,33 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+}
+
+.team-member {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+    .team-member img {
+        width: 225px;
+        height: 225px;
+        border: 7px solid #fff;
+    }
+
+    .team-member h4 {
+        margin-top: 25px;
+        margin-bottom: 0;
+        text-transform: none;
+    }
+
+    .team-member p {
+        margin-top: 0;
+    }
+
+#team {
+    margin-top: 40px
+}
+
+.carousel-inner {
+    width: 100%
 }
