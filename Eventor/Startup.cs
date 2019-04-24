@@ -24,17 +24,23 @@ using AutoMapper;
 using Services.Configuration;
 using Services.Interfaces;
 using Services;
+using Services.ServiceConfiguration;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using DataAccess.Entities;
+using DataAccess.Repositories;
 
 namespace Eventor
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            HostingEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment HostingEnvironment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -62,14 +68,18 @@ namespace Eventor
             services.AddSingleton(mapper);
            
             services.AddOptions();
-            services.Configure<MailConfig>(Configuration.GetSection("Mailing"));
+            services.Configure<MailConfig>(Configuration.GetSection("Mailing"));            
 
             services.AddTransient<IRepository<Event>, EventRepository>();
-            services.AddTransient<IRepository<Organizer>, OrganizerRepository>();
+            services.AddTransient<IRepository<Subscription>, SubscriptionRepository>();
             services.AddTransient<IRepository<ApplicationUser>, ApplicationUserRepository>();
+
+            services.AddSingleton<IImageConfig, ImageConfig>( _ => new ImageConfig { WeebRoot = HostingEnvironment.WebRootPath});
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<IEventService, EventService>();
-            services.AddTransient<IOrganizerService, OrganizerService>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<ISubscriptionService, SubscriptionService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -1,0 +1,40 @@
+﻿@model EventDTO
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control">
+
+            <label asp-for="Date" class="control-label"></label>
+            <input asp-for="Date" type="datetime" class="form-control">
+
+            <label asp-for="City" class="control-label"></label>
+            <input asp-for="City" class="form-control">
+
+            <label asp-for="Address" class="control-label"></label>
+            <input asp-for="Address" class="form-control">
+
+            <label asp-for="Number" class="control-label"></label>
+            <input asp-for="Number" type="number" class="form-control">
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" maxlength="500"
+                          placeholder="Type the description here" class="form-control"></textarea>
+            </div>
+
+            <label class="control-label">Image</label>
+            <input type="file" name="file" class="form-control-file" />
+
+            <input type="submit" value="Save" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-warning">Back to List</a>
+
+        </div>
+    </div>
+</form>

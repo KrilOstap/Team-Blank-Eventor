@@ -28,12 +28,12 @@ namespace Services
             return repository.GetAll().Select(item => mapper.Map<Event, EventDTO>(item));
         }
 
-        public EventDTO GetById(int id)
+        public EventDTO GetById(string id)
         {
             return mapper.Map<Event, EventDTO>(repository.GetById(id));
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             Event @event = repository.GetById(id);
 
@@ -43,17 +43,12 @@ namespace Services
             }
 
             repository.DeleteById(id);
+            repository.Save();
         }
 
-        public void Create(EventDTO eventDTO, IFormFile file)
+        public void Add(EventDTO eventDTO)
         {
-            Event @event = mapper.Map<EventDTO, Event>(eventDTO);
-
-            if (file != null && file.Length > 0)
-            {
-               // To Do image saving logic
-            }
-
+            Event @event = mapper.Map<EventDTO, Event>(eventDTO);          
             repository.Add(@event);
             repository.Save();
         }

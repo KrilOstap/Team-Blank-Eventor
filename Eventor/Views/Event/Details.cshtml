@@ -1,0 +1,31 @@
+﻿@model EventDTO
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <img class="h-50 card-img-top" src="~/Images/@Model.ImagePath" alt="Card image cap">
+            }
+            else
+            {
+                <img class="h-50 card-img-top" src="~/Images/default.png" alt="Card image cap">
+            }
+            <div class="card-body">
+                <h6 class="card-title">@Model.Title</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <label>Email</label>
+        <p>@Model.Organizer.Email</p>
+
+        <label>Address</label>
+        <p>@($"{Model.City} {Model.Address} {Model.Number}")</p>
+       
+    </div>
+</div>

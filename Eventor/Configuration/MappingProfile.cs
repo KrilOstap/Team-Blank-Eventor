@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccess.Data.Entities;
+using Eventor.Data.Entities;
 using Eventor.Models;
 using Services.DTO;
 using System;
@@ -14,9 +15,7 @@ namespace Services.Configuration
         {            
             CreateMap<Event, EventDTO>();
             CreateMap<EventDTO, Event>();
-            CreateMap<Organizer, OrganizerDTO>();
-            CreateMap<OrganizerDTO, Organizer>();
-            CreateMap<OrganizerDTO, OrganizerModel>();
+            CreateMap<ApplicationUser, ApplicationUserDTO>();
         }
     }
 }

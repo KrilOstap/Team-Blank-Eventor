@@ -7,38 +7,65 @@ using DataAccess.Data.Entities;
 using Eventor.Models;
 using Eventor.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.DTO;
 using Services.Interfaces;
+using PagedList.Core;
+using Microsoft.AspNetCore.Identity;
+using Eventor.Data.Entities;
 
 namespace Eventor.Controllers
 {
     public class EventController : Controller
     {
-        private readonly IEventService service;
+        private readonly IEventService eventService;
+        private readonly IImageService imageService;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IMapper mapper;
 
-        public EventController(IEventService service, IMapper mapper)
+        public EventController(IEventService service, IMapper mapper,
+            IImageService imageService, UserManager<ApplicationUser> userManager)
         {
-            this.service = service;
+            this.eventService = service;
             this.mapper = mapper;
+            this.imageService = imageService;
+            this.userManager = userManager;
         }
 
-        public IActionResult Events()
+        public IActionResult Index()
         {           
-            return View(service.GetEvents().Select(item => mapper.Map<EventDTO, EventModel>(item)));
+            return View(eventService.GetEvents());
         }
 
-        [Authorize(Roles = "Organaizer")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Organaizer")]
-        public IActionResult Remove(int id)
+       [HttpPost]
+        //[Authorize(Roles = "Organaizer")]
+        public IActionResult Create([Bind("Date", "Title", "Description", "City", "Address", "Number")]
+        EventDTO @event, IFormFile file)
         {
-            EventDTO @event = service.GetById(id);
+            if (ModelState.IsValid)
+            {
+                if (file.Length != 0 && file != null)
+                {                    
+                    string path = imageService.Save(file);
+                    @event.ImagePath = path;
+                    @event.OrganizerId = userManager.GetUserId(HttpContext.User);
+                    eventService.Add(@event);
+                }
+            }
+                     
+            return View();
+        }
+
+        [Authorize(Roles = "Organaizer")]
+        public IActionResult Remove(string id)
+        {
+            EventDTO @event = eventService.GetById(id);
 
             if (@event == null)
             {
@@ -48,22 +75,17 @@ namespace Eventor.Controllers
             return View();
         }
 
-        public IActionResult Description(int id)
+        [Authorize(Roles = "Organaizer")]
+        public IActionResult Edit(string id)
         {
-            EventDTO @event = service.GetById(id);
-            return View(mapper.Map<EventDTO, EventModel>(@event));
+            EventDTO @event = eventService.GetById(id);
+            return View(@event);
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Details(string id)
         {
-            EventDTO @event = service.GetById(id);
-            return View(mapper.Map<EventDTO, EventModel>(@event));
-        }
-
-        public IActionResult Subscribe(int id)
-        {
-            EventDTO @event = service.GetById(id);
-            return View();
-        }
+            EventDTO @event = eventService.GetById(id);
+            return View(@event);
+        }        
     }
 }

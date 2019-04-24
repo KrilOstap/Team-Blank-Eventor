@@ -1,11 +1,17 @@
-﻿using System;
+﻿using DataAccess.Data.Entities;
+using DataAccess.Entities;
+using Eventor.Data.Entities;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Services.DTO
+namespace DataAccess.Data.Entities
 {
-    public class EventDTO
-    {
+    public class Event
+    {        
         public string Id { get; set; }
 
         public DateTime Date { get; set; }
@@ -24,8 +30,8 @@ namespace Services.DTO
 
         public string OrganizerId { get; set; }
 
-        public ApplicationUserDTO Organizer { get; set; }
+        public ApplicationUser Organizer { get; set; }
 
-        ICollection<SubscriptionDTO> Subscriptions { get; set; }
+        ICollection<Subscription> Subscriptions { get; set; }
     }
 }

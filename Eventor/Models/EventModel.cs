@@ -7,7 +7,7 @@ namespace Eventor.Models
 {
     public class EventModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -17,10 +17,12 @@ namespace Eventor.Models
 
         public string ImagePath { get; set; }
 
-        public string City { get; set; }
+        public string FulllAddres { get; set; }
+        
+        public string OrganizerId { get; set; }
 
-        public string Addres { get; set; }
+        //public ApplicationUser Organizer { get; set; }
 
-        public int Number { get; set; }
+        //ICollection<Subscription> Subscriptions { get; set; }
     }
 }

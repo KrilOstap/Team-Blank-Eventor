@@ -1,0 +1,46 @@
+﻿@model IEnumerable<EventDTO>
+@{
+    ViewData["Title"] = "Events";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <h3>Events</h3>
+        <a asp-action="Create" class="btn btn-success">Create event</a>
+    </div>  
+</div>
+
+<div class="row card-columns">
+    @foreach (var eventModel in Model)
+    {
+        <div class="col-md-3">
+            <div class="card">
+                <h3 class="card-header text-center">@eventModel.Title</h3>
+
+                @if (!string.IsNullOrEmpty(eventModel.ImagePath))
+                {
+                    <img class="h-50 card-img-top" src="~/Images/@eventModel.ImagePath" alt="Card image cap">
+                }
+                else
+                {
+                    <img class="h-50 card-img-top" src="~/Images/default.png" alt="Card image cap">
+                }
+                    <div class="card-body">
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">@(eventModel.City + eventModel.Address + eventModel.Number)</li>
+                            <li class="list-group-item">@eventModel.Date</li>
+                        </ul>
+
+                        <p class="card-text text-justify">@eventModel.Description</p>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="/event/details/@eventModel.Id" class="btn btn-info">Details</a>                           
+                            <a asp-controller="Subscription" asp-action="Subscribe" asp-route-id="@eventModel.Id" class="btn btn-info">Subscribe</a>
+                        }                      
+                    </div>
+                </div>
+            </div>
+        }
+</div>
