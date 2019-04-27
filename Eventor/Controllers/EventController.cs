@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.DTO;
 using Services.Interfaces;
-using PagedList.Core;
 using Microsoft.AspNetCore.Identity;
 using Eventor.Data.Entities;
+using X.PagedList;
 
 namespace Eventor.Controllers
 {
@@ -33,9 +33,12 @@ namespace Eventor.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
-        {           
-            return View(eventService.GetEvents());
+        public IActionResult Index(int? pageNumber)
+        {
+            var events = eventService.GetEvents();
+            var currentPage = pageNumber ?? 1;
+            var onePageOfEvents = events.ToPagedList(currentPage, 4);
+            return View(onePageOfEvents);
         }
 
         public IActionResult Create()

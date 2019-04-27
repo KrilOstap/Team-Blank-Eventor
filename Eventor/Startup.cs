@@ -79,8 +79,7 @@ namespace Eventor
             services.AddTransient<IEventService, EventService>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IImageService, ImageService>();
-            services.AddTransient<ISubscriptionService, SubscriptionService>();
-
+            services.AddTransient<ISubscriptionService, SubscriptionService>();           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
