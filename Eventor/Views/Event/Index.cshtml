@@ -2,8 +2,6 @@
 @using X.PagedList
 @model IPagedList<EventDTO>
 
-<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
-
 @{
     ViewData["Title"] = "Events";
 }
@@ -32,21 +30,24 @@
                         {
                             <img class="h-50 card-img-top" src="~/Images/default.png" alt="Card image cap">
                         }
-                        <div class="card-body">
+                            <div class="card-body">
 
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">@(eventModel.City + eventModel.Address + eventModel.Number)</li>
-                                <li class="list-group-item">@eventModel.Date</li>
-                            </ul>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">@(eventModel.City + eventModel.Address + eventModel.Number)</li>
+                                    <li class="list-group-item">@eventModel.Date</li>
+                                </ul>
 
-                            <p class="card-text text-justify">@eventModel.Description</p>
+                                @if (eventModel.Description.Length > 80)
+                                {
+                                    <p class="card-text text-justify">@(eventModel.Description.Substring(80) + "...")</p>
+                                }
+                                else
+                                {
+                                    <p class="card-text text-justify">@eventModel.Description</p>
+                                }                             
 
-                            @if (User.Identity.IsAuthenticated)
-                            {
                                 <a href="/event/details/@eventModel.Id" class="btn btn-info">Details</a>
-                                <a asp-controller="Subscription" asp-action="Subscribe" asp-route-id="@eventModel.Id" class="btn btn-info">Subscribe</a>
-                            }
-                        </div>
+                            </div>
                     </div>
                 </div>
             }

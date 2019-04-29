@@ -26,6 +26,20 @@
 
         <label>Address</label>
         <p>@($"{Model.City} {Model.Address} {Model.Number}")</p>
-       
+
+        @if (true)
+        {
+            <a asp-controller="Event" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+            <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+        }
+        
+        @if (true)
+        {
+            <a asp-controller="Subscription" asp-action="Subscribe" asp-route-id="@Model.Id" class="btn btn-success">Subscribe</a>
+        }
+        else
+        {
+            <a asp-controller="Subscription" asp-action="Unsubscribe" asp-route-id="@Model.Id" class="btn btn-danger">Unsubscribe</a>
+        }
     </div>
 </div>

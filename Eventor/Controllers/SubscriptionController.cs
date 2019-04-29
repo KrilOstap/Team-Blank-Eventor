@@ -29,7 +29,7 @@ namespace Eventor.Controllers
             return View();
         }
 
-        public IActionResult Subscribe(string id)
+        public IActionResult Subscribe(string id, int pageNumber)
         {
             var subscription = new SubscriptionDTO
             {

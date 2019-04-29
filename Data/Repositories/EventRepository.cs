@@ -36,7 +36,7 @@ namespace DataAccess.Data.Repositories
 
         public IEnumerable<Event> GetAll()
         {
-            return db.Events.Include(e => e.Organizer);
+            return db.Events.AsNoTracking().Include(e => e.Organizer);
         }
      
         public Event GetById(string id)
