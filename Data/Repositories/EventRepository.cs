@@ -41,8 +41,9 @@ namespace DataAccess.Data.Repositories
      
         public Event GetById(string id)
         {
-            return db.Events.Include(e => e.Organizer)
-                .AsNoTracking().FirstOrDefault(item => item.Id == id);
+            return db.Events.AsNoTracking()
+                .Include(e => e.Organizer)                
+                .FirstOrDefault(item => item.Id == id);
         }
 
         public void Save()

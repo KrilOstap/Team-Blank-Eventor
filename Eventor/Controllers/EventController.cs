@@ -21,16 +21,19 @@ namespace Eventor.Controllers
     {
         private readonly IEventService eventService;
         private readonly IImageService imageService;
+        private readonly ISubscriptionService subscriptionService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IMapper mapper;
 
-        public EventController(IEventService service, IMapper mapper,
-            IImageService imageService, UserManager<ApplicationUser> userManager)
+        public EventController(IEventService eventService, IImageService imageService,
+            ISubscriptionService subscriptionService,
+            UserManager<ApplicationUser> userManager, IMapper mapper)
         {
-            this.eventService = service;
-            this.mapper = mapper;
+            this.eventService = eventService;
             this.imageService = imageService;
+            this.subscriptionService = subscriptionService;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
         public IActionResult Index(int? pageNumber)
@@ -88,7 +91,20 @@ namespace Eventor.Controllers
         public IActionResult Details(string id)
         {
             EventDTO @event = eventService.GetById(id);
-            return View(@event);
+            EventDetailsModel eventModel = mapper.Map<EventDTO, EventDetailsModel>(@event);
+            string currentUserId = userManager.GetUserId(HttpContext.User);
+
+            if (eventModel.OrganizerId == currentUserId)
+            {
+                eventModel.IsOwner = true;
+            }
+
+            if (subscriptionService.IsSubscribed(currentUserId, id))
+            {
+                eventModel.IsSubscribed = true;
+            }
+
+            return View(eventModel);
         }        
     }
 }
