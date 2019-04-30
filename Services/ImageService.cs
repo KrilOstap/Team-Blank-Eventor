@@ -51,7 +51,10 @@ namespace Services
             var resized = Resize(cropped, 500, 500);
 
             var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
-            var filePath = Path.Combine(config.WeebRoot, "Images", fileName);
+            var filePath = Path.Combine(config.WeebRoot, "Images/Events");
+
+            Directory.CreateDirectory(filePath);
+            filePath = Path.Combine(filePath, fileName);
             resized.Save(filePath);
             
             return fileName;

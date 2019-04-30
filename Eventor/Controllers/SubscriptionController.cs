@@ -29,7 +29,7 @@ namespace Eventor.Controllers
             return View();
         }
 
-        public IActionResult Subscribe(string id, int pageNumber)
+        public IActionResult Subscribe(string id)
         {
             var subscription = new SubscriptionDTO
             {
@@ -38,6 +38,14 @@ namespace Eventor.Controllers
             };
 
             subscriptionService.Add(subscription);
+
+            return RedirectToAction("Index", "Event");
+        }
+
+        public IActionResult Unsubscribe(string id)
+        {
+            string UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;           
+            subscriptionService.Delete(UserId, id);
 
             return RedirectToAction("Index", "Event");
         }

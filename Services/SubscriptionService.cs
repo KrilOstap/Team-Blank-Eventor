@@ -27,9 +27,12 @@ namespace Services
             repository.Save();
         }
 
-        public void Delete(string id)
+        public void Delete(string userId, string eventId)
         {
-            repository.DeleteById(id);
+            var subscription = repository.GetAll()
+                .Where(s => s.EventId == eventId && s.OrganizerId == userId).FirstOrDefault();
+
+            repository.DeleteById(subscription.Id);
             repository.Save();
         }
 
@@ -43,6 +46,14 @@ namespace Services
            var subscriptions = repository.GetAll().Where(s => s.OrganizerId == id);
             return mapper.Map<IEnumerable<Subscription>, IEnumerable<SubscriptionDTO>>(subscriptions);
         }
-    
+
+        public bool IsSubscribed(string userId, string eventId)
+        {
+            var subscription = repository.GetAll()
+                .Where(s => s.OrganizerId == userId && s.EventId == eventId)
+                .FirstOrDefault();
+
+            return subscription != null ? true : false;
+        }
     }
 }
