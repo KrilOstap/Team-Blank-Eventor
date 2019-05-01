@@ -64,28 +64,49 @@ namespace Eventor.Controllers
                     eventService.Add(@event);
                 }
             }
-                     
-            return View();
+
+            return RedirectToAction("Create");
         }
 
-        [Authorize(Roles = "Organaizer")]
+        //[Authorize(Roles = "Organaizer")]
         public IActionResult Remove(string id)
         {
             EventDTO @event = eventService.GetById(id);
+            string currentUserId = userManager.GetUserId(HttpContext.User);
 
             if (@event == null)
             {
                 return NotFound();
             }
 
-            return View();
-        }
+            if (currentUserId == @event.OrganizerId)
+            {
+                subscriptionService.UnsubscribeAll(id);
+                eventService.Delete(id);
+                imageService.Delete(@event.ImagePath);
+            }
 
-        [Authorize(Roles = "Organaizer")]
+            return RedirectToAction("Index");
+        }
+       
+        //[/*Authorize(Roles = "Organaizer")]*/
         public IActionResult Edit(string id)
         {
             EventDTO @event = eventService.GetById(id);
             return View(@event);
+        }
+
+        [HttpPost]
+        //[Authorize(Roles = "Organaizer")]
+        public IActionResult Edit([Bind("Id, Date", "Title", "Description", "City"
+            , "Address", "Number, ImagePath")]EventDTO @event)
+        {
+            if (ModelState.IsValid)
+            {
+                eventService.Update(@event);           
+            }
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Details(string id)

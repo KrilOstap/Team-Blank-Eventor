@@ -23,17 +23,12 @@ namespace Eventor.Controllers
             this.eventService = eventService;
             this.mapper = mapper;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+    
         public IActionResult Subscribe(string id)
         {
             var subscription = new SubscriptionDTO
             {
-                OrganizerId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
                 EventId = eventService.GetById(id).Id
             };
 
@@ -48,6 +43,12 @@ namespace Eventor.Controllers
             subscriptionService.Delete(UserId, id);
 
             return RedirectToAction("Index", "Event");
+        }
+
+        public IActionResult Index(string id)
+        {
+            string UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;         
+            return View(subscriptionService.GetSubscriptionsForUser(UserId));
         }
     }
 }

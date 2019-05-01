@@ -4,14 +4,16 @@ using Eventor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190501192620_renaming")]
+    partial class renaming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,13 +38,13 @@ namespace DataAccess.Migrations
 
                     b.Property<int>("Number");
 
-                    b.Property<string>("OrganizerId");
-
                     b.Property<string>("Title");
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Events");
                 });
@@ -236,9 +238,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Data.Entities.Event", b =>
                 {
-                    b.HasOne("Eventor.Data.Entities.ApplicationUser", "Organizer")
+                    b.HasOne("Eventor.Data.Entities.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("OrganizerId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("DataAccess.Entities.Subscription", b =>

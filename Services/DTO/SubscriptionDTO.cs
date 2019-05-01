@@ -12,8 +12,8 @@ namespace Services.DTO
 
         public EventDTO Event { get; set; }
 
-        public string OrganizerId { get; set; }
+        public string UserId { get; set; }
 
-        public ApplicationUserDTO Organizer { get; set; }
+        public ApplicationUserDTO User { get; set; }
     }
 }

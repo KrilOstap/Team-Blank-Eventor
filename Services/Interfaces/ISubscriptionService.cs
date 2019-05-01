@@ -12,5 +12,7 @@ namespace Services.Interfaces
         void Delete(string userId, string eventId);
         void Add(SubscriptionDTO eventDTO);
         bool IsSubscribed(string userId, string eventId);
+        void UnsubscribeAll(string eventId);
+        IEnumerable<SubscriptionDTO> GetSubscriptionsForUser(string id);
     }
 }

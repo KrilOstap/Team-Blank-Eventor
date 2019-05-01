@@ -38,14 +38,14 @@ namespace DataAccess.Repositories
         {
             return db.Subscriptions.AsNoTracking()
                 .Include(e => e.Event)
-                .Include(o => o.Organizer);                
+                .Include(o => o.User);                
         }
 
         public Subscription GetById(string id)
         {
             return db.Subscriptions.AsNoTracking()
                 .Include(e => e.Event)
-                .Include(o => o.Organizer)
+                .Include(o => o.User)
                 .FirstOrDefault(item => item.Id == id);
         }
 
@@ -54,7 +54,7 @@ namespace DataAccess.Repositories
             db.SaveChanges();
         }
 
-        public void Update(string id, Subscription item)
+        public void Update(Subscription item)
         {
             db.Subscriptions.Update(item);
         }

@@ -11,6 +11,7 @@ namespace Services.Interfaces
         IEnumerable<EventDTO> GetEvents();
         EventDTO GetById(string id);
         void Delete(string id);
-        void Add(EventDTO eventDTO);       
+        void Add(EventDTO eventDTO);
+        void Update(EventDTO eventDTO);
     }
 }
