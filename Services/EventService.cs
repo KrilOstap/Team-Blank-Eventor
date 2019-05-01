@@ -37,11 +37,6 @@ namespace Services
         {
             Event @event = repository.GetById(id);
 
-            if (@event.ImagePath != null && @event.ImagePath.Length != 0)
-            {
-                File.Delete(@event.ImagePath);
-            }
-
             repository.DeleteById(id);
             repository.Save();
         }
@@ -50,6 +45,13 @@ namespace Services
         {
             Event @event = mapper.Map<EventDTO, Event>(eventDTO);          
             repository.Add(@event);
+            repository.Save();
+        }
+
+        public void Update(EventDTO eventDTO)
+        {
+            Event @event = mapper.Map<EventDTO, Event>(eventDTO);
+            repository.Update(@event);
             repository.Save();
         }
     }

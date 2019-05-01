@@ -32,6 +32,6 @@ namespace DataAccess.Data.Entities
 
         public ApplicationUser Organizer { get; set; }
 
-        ICollection<Subscription> Subscriptions { get; set; }
+        ICollection<Subscription> Subscriptions { get; set; }       
     }
 }

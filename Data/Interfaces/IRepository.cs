@@ -10,7 +10,7 @@ namespace DataAccess.Data.Interfaces
         TEntity GetById(string id);
         void Add(TEntity item);
         void DeleteById(string id);
-        void Update(string id, TEntity item);
+        void Update(TEntity item);
         void Save();
     }
 }

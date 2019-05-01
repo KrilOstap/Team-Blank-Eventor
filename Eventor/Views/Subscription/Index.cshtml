@@ -1,7 +1,11 @@
-﻿
+﻿@model IEnumerable<SubscriptionDTO>
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
+@foreach (var subscription in Model)
+{
+    <p>@subscription.Event.Title</p>
+}

@@ -30,7 +30,7 @@ namespace Services
         public void Delete(string userId, string eventId)
         {
             var subscription = repository.GetAll()
-                .Where(s => s.EventId == eventId && s.OrganizerId == userId).FirstOrDefault();
+                .Where(s => s.EventId == eventId && s.UserId == userId).FirstOrDefault();
 
             repository.DeleteById(subscription.Id);
             repository.Save();
@@ -43,17 +43,34 @@ namespace Services
 
         public IEnumerable<SubscriptionDTO> GetSubscriptions(string id)
         {
-           var subscriptions = repository.GetAll().Where(s => s.OrganizerId == id);
+           var subscriptions = repository.GetAll().Where(s => s.UserId == id);
             return mapper.Map<IEnumerable<Subscription>, IEnumerable<SubscriptionDTO>>(subscriptions);
         }
 
         public bool IsSubscribed(string userId, string eventId)
         {
             var subscription = repository.GetAll()
-                .Where(s => s.OrganizerId == userId && s.EventId == eventId)
+                .Where(s => s.UserId == userId && s.EventId == eventId)
                 .FirstOrDefault();
 
             return subscription != null ? true : false;
+        }
+
+        public void UnsubscribeAll(string eventId)
+        {
+           var subscriptions = repository.GetAll().Where(s => s.EventId == eventId);
+
+            foreach (var subscription in subscriptions)
+            {
+                repository.DeleteById(subscription.Id);
+            }
+            repository.Save();
+        }
+
+        public IEnumerable<SubscriptionDTO> GetSubscriptionsForUser(string id)
+        {          
+           return mapper.Map<IEnumerable<Subscription>, IEnumerable<SubscriptionDTO>>
+                (repository.GetAll().Where(s => s.UserId == id));
         }
     }
 }

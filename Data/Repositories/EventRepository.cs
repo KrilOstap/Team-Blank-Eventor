@@ -51,9 +51,11 @@ namespace DataAccess.Data.Repositories
             db.SaveChanges();
         }
 
-        public void Update(string id, Event item)
+        public void Update(Event item)
         {
-            db.Events.Update(item);
+            var @event = db.Events.Find(item.Id);
+            @event.Title = item.Title;
+            db.Events.Update(@event);           
         }
 
         public virtual void Dispose(bool disposing)

@@ -14,8 +14,8 @@ namespace DataAccess.Entities
 
         public Event Event { get; set; }
 
-        public string OrganizerId { get; set; }
+        public string UserId { get; set; }
 
-        public ApplicationUser Organizer { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

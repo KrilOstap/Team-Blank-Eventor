@@ -58,6 +58,15 @@ namespace Services
             resized.Save(filePath);
             
             return fileName;
-        }     
+        } 
+        
+        public void Delete(string fileName)
+        {
+            var filePath = Path.Combine(config.WeebRoot, "Images/Events", fileName);
+            if (filePath != null)
+            {
+                File.Delete(filePath);
+            }           
+        }
     }
 }

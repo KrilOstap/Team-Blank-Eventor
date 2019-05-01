@@ -53,7 +53,7 @@ namespace Eventor.Data.Repositories
             db.SaveChanges();
         }
 
-        public void Update(string id, ApplicationUser item)
+        public void Update(ApplicationUser item)
         {
             db.Users.Update(item);
         }

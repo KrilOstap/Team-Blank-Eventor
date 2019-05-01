@@ -50,14 +50,14 @@ namespace Eventor.Test
                 {
                   Id = "1",
                   EventId = "1",
-                  OrganizerId = "1",
+                  UserId = "1",
                 },
 
                new Subscription
                 {
                   Id = "2",
                   EventId = "2",
-                  OrganizerId = "2",
+                  UserId = "2",
                 },
             });
 
