@@ -18,6 +18,10 @@ html {
   }
 }
 
+body {
+	
+}
+
 .carousel-item img {
     width: 100%;
     height: 90vh
@@ -91,4 +95,53 @@ body {
 
 .row team {
     margin-top: 10%
+}
+
+/* ============  */
+main.pb-3 .container {
+	margin-top: 80px;
+}
+
+.row_event-datail label {
+	font-weight: bold;
+}
+
+.event-title {
+	margin-bottom: 26px;
+}
+
+.col--event-image {
+	width: 285px;
+	padding: 0 15px;
+	margin-bottom: 26px;
+}
+
+.col--event-datail {
+	width: calc(100% - 315px);
+	padding: 0 15px;
+	margin-bottom: 26px;
+}
+
+.col--event-desc {
+	width: 100%;
+	padding: 0 15px;
+}
+
+.col--event-desc .card {
+	padding: 14px;
+}
+
+@media (max-width: 767px) {
+	.col--event-image, .col--event-datail {
+		width: 100%;
+		
+	}
+}
+
+#cookieConsent {
+	position: absolute;
+	bottom: 60px;
+	left: 0;
+	right: 0;
+	margin: 0;
 }
