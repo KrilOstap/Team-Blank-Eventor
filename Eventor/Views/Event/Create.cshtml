@@ -30,10 +30,12 @@
             </div>
 
             <label class="control-label">Image</label>
-            <input type="file" name="file" class="form-control-file" />
+            <input type="file" name="file" />
 
-            <input type="submit" value="Save" class="btn btn-success" />
-            <a asp-action="Index" class="btn btn-warning">Back to List</a>
+            <div id="create-margin">
+                <input type="submit" value="Save" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-warning">Back to List</a>
+            </div>
 
         </div>
     </div>

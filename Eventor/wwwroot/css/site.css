@@ -18,10 +18,6 @@ html {
   }
 }
 
-body {
-	
-}
-
 .carousel-item img {
     width: 100%;
     height: 90vh
@@ -144,4 +140,12 @@ main.pb-3 .container {
 	left: 0;
 	right: 0;
 	margin: 0;
+}
+
+#create-margin {
+    margin-top: 20px;
+}
+
+.pselab {
+    font-weight: bold;
 }
