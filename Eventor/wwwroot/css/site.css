@@ -142,10 +142,33 @@ main.pb-3 .container {
 	margin: 0;
 }
 
+<<<<<<< HEAD
 #create-margin {
     margin-top: 20px;
 }
 
 .pselab {
     font-weight: bold;
+=======
+.subscriptionCard {
+    height: 230px;
+    margin: 15px;
+}
+
+.subscriptionCard img {
+    margin: 15px;
+    object-fit: cover;
+    max-height: 200px;
+    max-width: calc(100% - 30px);
+    width: 100%;
+}
+
+.table td {
+    padding: 0.4rem;
+}
+
+.table th {
+    padding: 0.4rem;
+   font-weight:500;
+>>>>>>> 65f4d8d42fabf1db209943657ccb868b4299eb51
 }
