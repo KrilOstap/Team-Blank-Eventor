@@ -3,9 +3,42 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="event-title">Subscription</h1>
 
 @foreach (var subscription in Model)
 {
-    <p>@subscription.Event.Title</p>
+        <div class="card subscriptionCard">
+            <div class="row no-gutters">
+                <div class="col-md-3">
+                    <img src="~/Images/Events/@subscription.Event.ImagePath" alt="@subscription.Event.Title">
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h4 class="card-title">@subscription.Event.Title</h4>
+                        <table class="table">
+                            <tr>
+                                <th>Description:</th>
+                                <td>@subscription.Event.Description.Substring(0, Math.Min(subscription.Event.Description.Length, 15))...</td>
+                            </tr>
+                            <tr>
+                                <th>Address:</th>
+                                <td>@subscription.Event.City, @subscription.Event.Address @subscription.Event.Number</td>
+                            </tr>
+                            <tr>
+                                <th>Organizer:</th>
+                                <td>@subscription.Event.Organizer.Email</td>
+                            </tr>
+                            <tr>
+                                <th>Date:</th>
+                                <td> @subscription.Event.Date.ToShortDateString()</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex justify-content-center align-items-center flex-column">
+                    <p class="text-center">For more information or unsubscribe click Details</p>
+                    <a href="/event/details/@subscription.Event.Id" class="btn btn-info">Details</a>
+                </div>
+            </div>
+        </div>
 }

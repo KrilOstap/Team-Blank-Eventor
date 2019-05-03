@@ -37,8 +37,9 @@ namespace DataAccess.Repositories
         public IEnumerable<Subscription> GetAll()
         {
             return db.Subscriptions.AsNoTracking()
+                .Include(u => u.User)
                 .Include(e => e.Event)
-                .Include(o => o.User);                
+                .ThenInclude(e => e.Organizer);
         }
 
         public Subscription GetById(string id)
