@@ -116,18 +116,21 @@ namespace Eventor.Controllers
         {
             EventDTO @event = eventService.GetById(id);
             EventDetailsModel eventModel = mapper.Map<EventDTO, EventDetailsModel>(@event);
-            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (eventModel.OrganizerId == currentUserId)
+            if (currentUserId != null)
             {
-                eventModel.IsOwner = true;
-            }
+                if (eventModel.OrganizerId == currentUserId)
+                {
+                    eventModel.IsOwner = true;
+                }
 
-            if (subscriptionService.IsSubscribed(currentUserId, id))
-            {
-                eventModel.IsSubscribed = true;
+                if (subscriptionService.IsSubscribed(currentUserId, id))
+                {
+                    eventModel.IsSubscribed = true;
+                }
             }
-
+       
             return View(eventModel);
         }        
     }
