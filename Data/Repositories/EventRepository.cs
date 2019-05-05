@@ -36,7 +36,8 @@ namespace DataAccess.Data.Repositories
 
         public IEnumerable<Event> GetAll()
         {
-            return db.Events.AsNoTracking().Include(e => e.Organizer);
+            return db.Events.AsNoTracking().Include(e => e.Organizer)
+                .Where(e => e.Date > DateTime.Now).OrderBy(e => e.Date);
         }
      
         public Event GetById(string id)
@@ -55,6 +56,11 @@ namespace DataAccess.Data.Repositories
         {
             var @event = db.Events.Find(item.Id);
             @event.Title = item.Title;
+            @event.Date = item.Date;
+            @event.City = item.City;
+            @event.Address = item.Address;
+            @event.Number = item.Number;
+            @event.Description = item.Description;
             db.Events.Update(@event);           
         }
 

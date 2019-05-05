@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
+using Eventor.Models;
 using Eventor.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Services.DTO;
 
 namespace Eventor.Controllers
 {
@@ -12,22 +16,42 @@ namespace Eventor.Controllers
     public class EmailController : Controller
     {
         private readonly IMailService service;
+        private readonly IMapper mapper;
 
-        public EmailController(IMailService service)
+        public EmailController(IMailService service, IMapper mapper)
         {
             this.service = service;
+            this.mapper = mapper;
         }
 
-        public IActionResult SendEmail()
-        {          
-            return View();
-        }
-
-        [HttpPost]        
-        public IActionResult SendEmail(string subject, string body)
+        public IActionResult EmailError()
         {
-            service.Send(subject, body);
             return View();
+        }
+
+        public IActionResult SendEmail(string id)
+        {          
+            return View(new EmailModel { EventId = id});
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Organizer")]
+        public IActionResult SendEmail([Bind("Subject", "Body", "EventId")] EmailModel email)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var emailToSend = mapper.Map<EmailModel, EmailDTO>(email);
+
+            try
+            {
+                service.Send(emailToSend, userId);
+            }
+            catch (Exception e)
+            {
+                return View(nameof(EmailError));
+            }
+
+            return RedirectToAction("Index", "Event", new { Id = userId });
         }
     }
 }

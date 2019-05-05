@@ -17,6 +17,7 @@ namespace Services.Configuration
             CreateMap<EventDTO, Event>();
             CreateMap<ApplicationUser, ApplicationUserDTO>();
             CreateMap<EventDTO, EventDetailsModel>();
+            CreateMap<EmailModel, EmailDTO>();
         }
     }
 }

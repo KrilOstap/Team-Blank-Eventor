@@ -15,5 +15,7 @@ namespace Services.DTO
         public string UserId { get; set; }
 
         public ApplicationUserDTO User { get; set; }
+
+        public bool AreNotificationsEnabled { get; set; }
     }
 }
