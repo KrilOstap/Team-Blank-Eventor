@@ -150,19 +150,6 @@ main.pb-3 .container {
     font-weight: bold;
 }
 
-.subscriptionCard {
-    height: 230px;
-    margin: 15px;
-}
-
-.subscriptionCard img {
-    margin: 15px;
-    object-fit: cover;
-    max-height: 200px;
-    max-width: calc(100% - 30px);
-    width: 100%;
-}
-
 .table td {
     padding: 0.4rem;
 }
@@ -170,4 +157,10 @@ main.pb-3 .container {
 .table th {
     padding: 0.4rem;
    font-weight:500;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 244px;
+    object-fit: cover;
 }

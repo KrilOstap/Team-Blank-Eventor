@@ -4,22 +4,21 @@
 }
 
 <h1 class="event-title">Subscription</h1>
-
+<div class="d-flex flex-column">
 @foreach (var subscription in Model)
 {
-    <div class="card subscriptionCard">
-        <div class="row">
-            <div class="col-md-3">
+        <div class="row d-flex border rounded m-1">
+            <div class="col-md-4 center-block d-flex align-items-center">
                 @if (!string.IsNullOrEmpty(@subscription.Event.ImagePath))
                 {
-                    <img src="~/Images/Events/@subscription.Event.ImagePath" alt="@subscription.Event.Title">
+                    <img class="card-img-top" src="~/Images/Events/@subscription.Event.ImagePath" alt="@subscription.Event.Title">
                 }
                 else
                 {
-                    <img class="h-50 card-img-top" src="~/Images/content/default.png" alt="Card image cap">
+                    <img  class="mx-auto" src="~/Images/content/default.png" alt="Card image cap">
                 }
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card-body">
                     <h4 class="card-title">@subscription.Event.Title</h4>
                     <table class="table">
@@ -49,11 +48,12 @@
                     </table>
                 </div>
             </div>
-            <div class="col-md-3 d-flex justify-content-center align-items-center flex-column">
+            <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
                 <a href="/event/details/@subscription.Event.Id" class="btn btn-info">Details</a>
                 <a asp-controller="Subscription" asp-action="Unsubscribe" asp-route-id="@subscription.EventId" class="btn btn-outline-secondary m-2">Unsubscribe</a>
                 <a asp-controller="Email" asp-action="SendEmail" asp-route-id="@subscription.EventId" class="btn btn-outline-secondary">Send message</a>
             </div>
         </div>
-    </div>
+   
 }
+    </div>
