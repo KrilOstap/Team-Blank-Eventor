@@ -1,13 +1,31 @@
-﻿
+﻿@model EmailModel
 @{
     ViewData["Title"] = "SendEmail";
 }
 
 <form method="post">
-    <label>Subject:</label><br />
-    <input type="text" name="subject" /><br /><br />
-    <label>Body:</label><br />
-    <input type="text" name="body" /><br /><br />
-    <input type="submit" value="send" />
-</form>
+    <div class="row">
+        <div class="co-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <input type = "hidden" asp-for="EventId">
+
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control">
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Body" class="control-label"></label>
+                <textarea asp-for="Body" maxlength="500" class="form-control" 
+                placeholder="Type messeage her"></textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Send" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+</form>

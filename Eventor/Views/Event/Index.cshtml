@@ -39,13 +39,13 @@
                             <li class="list-group-item">@eventModel.Date</li>
                         </ul>
 
-                        @if (eventModel.Description.Length > 15)
+                        @if (eventModel.Description.Length > 80)
                         {
-                            <p class="card-text text-justify">@(eventModel.Description.Substring(15) + "...")</p>
+                            <p class="card-text text-align">@(string.Concat(eventModel.Description.Substring(0, 80), "..."))</p>
                         }
                         else
                         {
-                            <p class="card-text text-center">@eventModel.Description</p>
+                            <p class="card-text text-align">@eventModel.Description</p>
                         }
 
                         <a href="/event/details/@eventModel.Id" class="btn btn-info">Details</a>

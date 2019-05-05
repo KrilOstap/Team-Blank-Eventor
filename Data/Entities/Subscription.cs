@@ -16,6 +16,8 @@ namespace DataAccess.Entities
 
         public string UserId { get; set; }
 
+        public bool AreNotificationsEnabled { get; set; }
+
         public ApplicationUser User { get; set; }
     }
 }

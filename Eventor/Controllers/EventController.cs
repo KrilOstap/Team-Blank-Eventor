@@ -14,6 +14,7 @@ using Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Eventor.Data.Entities;
 using X.PagedList;
+using System.Security.Claims;
 
 namespace Eventor.Controllers
 {
@@ -21,8 +22,7 @@ namespace Eventor.Controllers
     {
         private readonly IEventService eventService;
         private readonly IImageService imageService;
-        private readonly ISubscriptionService subscriptionService;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ISubscriptionService subscriptionService;       
         private readonly IMapper mapper;
 
         public EventController(IEventService eventService, IImageService imageService,
@@ -31,8 +31,7 @@ namespace Eventor.Controllers
         {
             this.eventService = eventService;
             this.imageService = imageService;
-            this.subscriptionService = subscriptionService;
-            this.userManager = userManager;
+            this.subscriptionService = subscriptionService;            
             this.mapper = mapper;
         }
 
@@ -49,30 +48,32 @@ namespace Eventor.Controllers
             return View();
         }
 
-       [HttpPost]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Organaizer")]
         public IActionResult Create([Bind("Date", "Title", "Description", "City", "Address", "Number")]
         EventDTO @event, IFormFile file)
         {
             if (ModelState.IsValid)
             {
-                if (file.Length != 0 && file != null)
+                if (file != null && file.Length != 0)
                 {                    
                     string path = imageService.Save(file);
                     @event.ImagePath = path;
-                    @event.OrganizerId = userManager.GetUserId(HttpContext.User);
+                    @event.OrganizerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                     eventService.Add(@event);
+                    return RedirectToAction(nameof(Create));
                 }
             }
 
-            return RedirectToAction("Create");
+            return View(@event);
         }
 
         //[Authorize(Roles = "Organaizer")]
         public IActionResult Remove(string id)
         {
             EventDTO @event = eventService.GetById(id);
-            string currentUserId = userManager.GetUserId(HttpContext.User);
+            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if (@event == null)
             {
@@ -97,23 +98,25 @@ namespace Eventor.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Organaizer")]
-        public IActionResult Edit([Bind("Id, Date", "Title", "Description", "City"
-            , "Address", "Number, ImagePath")]EventDTO @event)
+        public IActionResult Edit([Bind("Id, Date", "Title", "Description", "City",
+        "Address", "Number, ImagePath")]EventDTO @event)
         {
             if (ModelState.IsValid)
             {
-                eventService.Update(@event);           
+                eventService.Update(@event);
+                return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToAction("Index");
+            return View(@event);
         }
 
         public IActionResult Details(string id)
         {
             EventDTO @event = eventService.GetById(id);
             EventDetailsModel eventModel = mapper.Map<EventDTO, EventDetailsModel>(@event);
-            string currentUserId = userManager.GetUserId(HttpContext.User);
+            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if (eventModel.OrganizerId == currentUserId)
             {

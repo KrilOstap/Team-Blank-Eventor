@@ -29,7 +29,8 @@ namespace Eventor.Controllers
             var subscription = new SubscriptionDTO
             {
                 UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                EventId = eventService.GetById(id).Id
+                EventId = eventService.GetById(id).Id,
+                AreNotificationsEnabled = true
             };
 
             subscriptionService.Add(subscription);

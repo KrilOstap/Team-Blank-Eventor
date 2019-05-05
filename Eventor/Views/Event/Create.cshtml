@@ -8,29 +8,49 @@
 <form method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-6">
-            <label asp-for="Title" class="control-label"></label>
-            <input asp-for="Title" class="form-control">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <label asp-for="Date" class="control-label"></label>
-            <input asp-for="Date" type="datetime" class="form-control">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
 
-            <label asp-for="City" class="control-label"></label>
-            <input asp-for="City" class="form-control">
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" type="datetime" class="form-control">
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
 
-            <label asp-for="Address" class="control-label"></label>
-            <input asp-for="Address" class="form-control">
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control">
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
 
-            <label asp-for="Number" class="control-label"></label>
-            <input asp-for="Number" type="number" class="form-control">
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control">
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" type="number" class="form-control">
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" maxlength="500"
                           placeholder="Type the description here" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
-            <label class="control-label">Image</label>
-            <input type="file" name="file" />
+            <div class="form-group">
+                <label class="control-label">Image</label>
+                <input type="file" name="file" />
+            </div>
 
             <div id="create-margin">
                 <input type="submit" value="Save" class="btn btn-success" />
@@ -38,5 +58,5 @@
             </div>
 
         </div>
-    </div>
+        </div>
 </form>
