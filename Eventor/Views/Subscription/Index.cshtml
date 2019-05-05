@@ -7,40 +7,53 @@
 
 @foreach (var subscription in Model)
 {
-        <div class="card subscriptionCard">
-            <div class="row no-gutters">
-                <div class="col-md-3">
+    <div class="card subscriptionCard">
+        <div class="row">
+            <div class="col-md-3">
+                @if (!string.IsNullOrEmpty(@subscription.Event.ImagePath))
+                {
                     <img src="~/Images/Events/@subscription.Event.ImagePath" alt="@subscription.Event.Title">
-                </div>
-                <div class="col-md-6">
-                    <div class="card-body">
-                        <h4 class="card-title">@subscription.Event.Title</h4>
-                        <table class="table">
-                            <tr>
-                                <th>Description:</th>
-                                <td>@subscription.Event.Description.Substring(0, Math.Min(subscription.Event.Description.Length, 80))...</td>
-                            </tr>
-                            <tr>
-                                <th>Address:</th>
-                                <td>@subscription.Event.City, @subscription.Event.Address @subscription.Event.Number</td>
-                            </tr>
-                            <tr>
-                                <th>Organizer:</th>
-                                <td>@subscription.Event.Organizer.Email</td>
-                            </tr>
-                            <tr>
-                                <th>Date:</th>
-                                <td> @subscription.Event.Date.ToShortDateString()</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-3 d-flex justify-content-center align-items-center flex-column">
-                    <p class="text-center">For more information or unsubscribe click Details</p>
-                    <a href="/event/details/@subscription.Event.Id" class="btn btn-info">Details</a>
-                    <a asp-controller="Subscription" asp-action="Unsubscribe" asp-route-id="@subscription.EventId" class="btn btn-outline-secondary">Unsubscribe</a>
-                    <a asp-controller="Email" asp-action="SendEmail" asp-route-id="@subscription.EventId" class="btn btn-outline-secondary">Send messeage</a>
+                }
+                else
+                {
+                    <img class="h-50 card-img-top" src="~/Images/content/default.png" alt="Card image cap">
+                }
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h4 class="card-title">@subscription.Event.Title</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Address:</th>
+                            <td>@subscription.Event.City, @subscription.Event.Address @subscription.Event.Number</td>
+                        </tr>
+                        <tr>
+                            <th>Organizer:</th>
+                            <td>@subscription.Event.Organizer.Email</td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            @if (@subscription.Event.Description.Length > 15)
+                            {
+                                <td>@subscription.Event.Description.Substring(0, 15)...</td>
+                            }
+                            else
+                            {
+                                <td>@subscription.Event.Description</td>
+                            }
+                        </tr>
+                        <tr>
+                            <th>Date:</th>
+                            <td> @subscription.Event.Date.ToShortDateString()</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+            <div class="col-md-3 d-flex justify-content-center align-items-center flex-column">
+                <a href="/event/details/@subscription.Event.Id" class="btn btn-info">Details</a>
+                <a asp-controller="Subscription" asp-action="Unsubscribe" asp-route-id="@subscription.EventId" class="btn btn-outline-secondary m-2">Unsubscribe</a>
+                <a asp-controller="Email" asp-action="SendEmail" asp-route-id="@subscription.EventId" class="btn btn-outline-secondary">Send message</a>
+            </div>
         </div>
+    </div>
 }
