@@ -4,47 +4,49 @@
 }
 
 	<h2 class="event-title">@Model.Title</h2>
-	<div class="row row_event-datail">
-		<div class="col--event-image">
-			<div class="card">
-				@if (!string.IsNullOrEmpty(Model.ImagePath))
-				{
-					<img class="h-50 card-img-top" src="~/Images/Events/@Model.ImagePath" alt="Card image cap">
-				}
-				else
-				{
-					<img class="h-50 card-img-top" src="~/Images/Content/default.png" alt="Card image cap">
-				}
-			</div>
-		</div>
+    <div class="row row_event-datail">
+        <div class="col--event-image">
+            <div class="card">
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <img class="h-50 card-img-top" src="~/Images/Events/@Model.ImagePath" alt="Card image cap">
+                }
+                else
+                {
+                    <img class="h-50 card-img-top" src="~/Images/Content/default.png" alt="Card image cap">
+                }
+            </div>
+        </div>
 
-		<div class="col--event-datail">
-			<label>Date</label>
-			<p>@Model.Date.ToString("dd.MM.yyyy hh:mm")</p>
+        <div class="col--event-datail">
+            <label>Date</label>
+            <p>@Model.Date.ToString("dd.MM.yyyy hh:mm")</p>
 
-			<label>Organizer Email</label>
-			<p>@Model.Organizer.Email</p>
+            <label>Organizer Email</label>
+            <p>@Model.Organizer.Email</p>
 
-			<label>Address</label>
-			<p>@($"{Model.City}, {Model.Address} {Model.Number}")</p>
+            <label>Address</label>
+            <p>@($"{Model.City}, {Model.Address} {Model.Number}")</p>
 
-			@if (Model.IsOwner)
-			{
-				<a asp-controller="Event" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
-				<a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
-			}
+            @if (Model.IsOwner)
+            {
+                <a asp-controller="Event" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
+                <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
+            }
 
-			@if (!Model.IsSubscribed)
-			{
-				<a asp-controller="Subscription" asp-action="Subscribe" asp-route-id="@Model.Id" class="btn btn-outline-success">Subscribe</a>
-			}
-			else
-			{
-				<a asp-controller="Subscription" asp-action="UnsubscribeFromEvent" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Unsubscribe</a>
-			}
-		</div>
+            @if (!Model.IsSubscribed)
+            {
+                <a asp-controller="Subscription" asp-action="Subscribe" asp-route-id="@Model.Id" class="btn btn-outline-success">Subscribe</a>
+            }
+            else
+            {
+                <a asp-controller="Subscription" asp-action="UnsubscribeFromEvent" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Unsubscribe</a>
+            }
+        </div>
 
-		<div class="col--event-desc">
-			<div class="card">
-				@Model.Description
-			</div>
+        <div class="col--event-desc">
+            <div class="card">
+                @Model.Description
+            </div>
+        </div>
+    </div>

@@ -43,6 +43,7 @@ namespace Eventor.Controllers
             return View(onePageOfEvents);
         }
 
+        [Authorize(Roles = "Organizer")]
         public IActionResult Create()
         {
             return View();
@@ -50,7 +51,7 @@ namespace Eventor.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Organaizer")]
+        [Authorize(Roles = "Organizer")]
         public IActionResult Create([Bind("Date", "Title", "Description", "City", "Address", "Number")]
         EventDTO @event, IFormFile file)
         {
@@ -69,7 +70,7 @@ namespace Eventor.Controllers
             return View(@event);
         }
 
-        //[Authorize(Roles = "Organaizer")]
+        [Authorize(Roles = "Organizer")]
         public IActionResult Remove(string id)
         {
             EventDTO @event = eventService.GetById(id);
@@ -89,8 +90,8 @@ namespace Eventor.Controllers
 
             return RedirectToAction("Index");
         }
-       
-        //[/*Authorize(Roles = "Organaizer")]*/
+
+        [Authorize(Roles = "Organizer")]
         public IActionResult Edit(string id)
         {
             EventDTO @event = eventService.GetById(id);
@@ -99,7 +100,7 @@ namespace Eventor.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Organaizer")]
+        [Authorize(Roles = "Organizer")]
         public IActionResult Edit([Bind("Id, Date", "Title", "Description", "City",
         "Address", "Number, ImagePath")]EventDTO @event)
         {

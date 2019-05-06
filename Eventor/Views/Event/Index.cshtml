@@ -12,9 +12,15 @@
         <div class="w-75">
             <h3>Events</h3>
         </div>
-        <div class="w-25">
-            <a asp-action="Create" class="btn btn-success">Create event</a>
-        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            @if (!User.IsInRole("Organizer"))
+            {
+                <div class="w-25">
+                    <a asp-action="Create" class="btn btn-success">Create event</a>
+                </div>
+            }          
+        }
     </div>
     <hr>
     <div class="row card-columns">

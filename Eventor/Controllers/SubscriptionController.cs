@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.DTO;
 using Services.Interfaces;
@@ -23,7 +24,7 @@ namespace Eventor.Controllers
             this.eventService = eventService;
             this.mapper = mapper;
         }
-    
+      
         public IActionResult Subscribe(string id)
         {
             var subscription = new SubscriptionDTO
