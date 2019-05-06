@@ -55,9 +55,13 @@ namespace Eventor
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<ApplicationUser>()
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            CreateRole(services.BuildServiceProvider()).Wait();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -80,7 +84,7 @@ namespace Eventor
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ISubscriptionService, SubscriptionService>();           
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,6 +114,18 @@ namespace Eventor
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+          
+        }
+
+        public async Task CreateRole(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleExists = await roleManager.RoleExistsAsync("Organizer");
+
+            if (!roleExists)
+            {
+                IdentityResult result = await roleManager.CreateAsync(new IdentityRole("Organizer"));
+            }
         }
     }
 }

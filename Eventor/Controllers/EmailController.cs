@@ -12,7 +12,7 @@ using Services.DTO;
 
 namespace Eventor.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Organizer")]
     public class EmailController : Controller
     {
         private readonly IMailService service;
@@ -31,12 +31,11 @@ namespace Eventor.Controllers
 
         public IActionResult SendEmail(string id)
         {          
-            return View(new EmailModel { EventId = id});
+            return View(new EmailModel { EventId = id });
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Organizer")]
+        [ValidateAntiForgeryToken]       
         public IActionResult SendEmail([Bind("Subject", "Body", "EventId")] EmailModel email)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

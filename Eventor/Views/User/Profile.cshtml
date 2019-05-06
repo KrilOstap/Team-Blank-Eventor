@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+
+@if (User.Identity.IsAuthenticated)
+{
+    @if (!User.IsInRole("Organizer"))
+    {
+        <div class="w-25">
+            <a asp-action="PromoteToOrganizer" asp-controller="User" class="btn btn-success">Become organizer</a>
+        </div>
+    }
+}
