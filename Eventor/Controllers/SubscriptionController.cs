@@ -35,7 +35,7 @@ namespace Eventor.Controllers
 
             subscriptionService.Add(subscription);
 
-            return RedirectToAction("Index", "Event");
+            return RedirectToAction("Details", "Event", new { Id  = id });
         }
 
         public IActionResult Unsubscribe(string id)
@@ -43,7 +43,15 @@ namespace Eventor.Controllers
             string UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;           
             subscriptionService.Delete(UserId, id);
 
-            return RedirectToAction("Index", "Event");
+            return RedirectToAction("Index", new { Id = UserId });
+        }
+
+        public IActionResult UnsubscribeFromEvent(string id)
+        {
+            string UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            subscriptionService.Delete(UserId, id);
+
+            return RedirectToAction("Details", "Event", new { Id = id } );
         }
 
         public IActionResult Index(string id)
