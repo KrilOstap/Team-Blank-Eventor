@@ -19,26 +19,23 @@ namespace Eventor.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IApplicationUserService userService;
-        private readonly IEventService eventService;
+        private readonly IEventService eventService;        
         private readonly IMapper mapper;
 
         public UserController(RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager, IApplicationUserService userService,
-            IEventService eventService, IMapper mapper)
+            IEventService eventService, IMapper mapper, SignInManager<ApplicationUser> signInManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.userService = userService;
             this.eventService = eventService;
             this.mapper = mapper;
+            this.signInManager = signInManager;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-        
+    
         public IActionResult Profile(string organizerId)
         {
             var user = userService.GetById(organizerId);
@@ -66,6 +63,7 @@ namespace Eventor.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PromoteToOrganizer([Bind("FirstName",
             "LastName", "Password")] PromotionModel promotion)
         {
@@ -73,15 +71,19 @@ namespace Eventor.Controllers
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 ApplicationUser user = await userManager.FindByIdAsync(userId);
-
-                if (user != null && !User.IsInRole("Organizer"))
+                var login = await signInManager.CheckPasswordSignInAsync(user, promotion.Password, false);
+                
+                if (user != null && !User.IsInRole("Organizer") && login.Succeeded)
                 {
                     var result = await userManager.AddToRoleAsync(user, "Organizer");
-                }
-
-                return View(nameof(SuccessfulPromotion));
+                    user.FirstName = promotion.FirstName;
+                    user.LastName = promotion.LastName;
+                    userService.UpdateInformation(user);
+                    return View(nameof(SuccessfulPromotion));
+                }               
             }
-           
+
+            promotion.LogginFailed = true;
             return View(promotion);
         }
     }

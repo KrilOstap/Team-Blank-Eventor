@@ -25,5 +25,10 @@ namespace Services
         {
             return mapper.Map<ApplicationUser, ApplicationUserDTO>(repository.GetById(id));
         }
+
+        public void UpdateInformation(ApplicationUser user)
+        {
+            repository.Update(user);
+        }
     }
 }
