@@ -60,17 +60,29 @@ namespace Eventor.Controllers
             return View();
         }
 
-        public async Task<IActionResult> PromoteToOrganizer()
+        public IActionResult PromoteToOrganizer()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ApplicationUser user = await userManager.FindByIdAsync(userId);
+            return View();
+        }
 
-            if (user != null && !User.IsInRole("Organizer"))
+        [HttpPost]
+        public async Task<IActionResult> PromoteToOrganizer([Bind("FirstName",
+            "LastName", "Password")] PromotionModel promotion)
+        {
+            if (ModelState.IsValid)
             {
-                var result = await userManager.AddToRoleAsync(user, "Organizer");
-            }
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                ApplicationUser user = await userManager.FindByIdAsync(userId);
 
-            return View(nameof(SuccessfulPromotion));
+                if (user != null && !User.IsInRole("Organizer"))
+                {
+                    var result = await userManager.AddToRoleAsync(user, "Organizer");
+                }
+
+                return View(nameof(SuccessfulPromotion));
+            }
+           
+            return View(promotion);
         }
     }
 }
