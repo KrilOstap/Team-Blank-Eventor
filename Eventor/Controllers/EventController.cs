@@ -35,9 +35,9 @@ namespace Eventor.Controllers
             this.mapper = mapper;
         }
 
-        public IActionResult Index(int? pageNumber)
+        public IActionResult Index(int? pageNumber, string userId)
         {
-            var events = eventService.GetEvents();
+            var events = eventService.GetFutureEvents();
             var currentPage = pageNumber ?? 1;
             var onePageOfEvents = events.ToPagedList(currentPage, 4);
             return View(onePageOfEvents);
@@ -113,25 +113,25 @@ namespace Eventor.Controllers
             return View(@event);
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Details(string eventId)
         {
-            EventDTO @event = eventService.GetById(id);
+            EventDTO @event = eventService.GetById(eventId);
             EventDetailsModel eventModel = mapper.Map<EventDTO, EventDetailsModel>(@event);
+
             string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (currentUserId != null)
-            {
-                if (eventModel.OrganizerId == currentUserId)
-                {
-                    eventModel.IsOwner = true;
-                }
+            eventModel.NumberOfSubscribers = subscriptionService.GetNumberOfSubscribers(eventId);
 
-                if (subscriptionService.IsSubscribed(currentUserId, id))
-                {
-                    eventModel.IsSubscribed = true;
-                }
+            if (eventModel.OrganizerId == currentUserId)
+            {
+               eventModel.IsOwner = true;
             }
-       
+
+            if (subscriptionService.IsSubscribed(currentUserId, eventId))
+            {
+               eventModel.IsSubscribed = true;
+            }
+                 
             return View(eventModel);
         }        
     }

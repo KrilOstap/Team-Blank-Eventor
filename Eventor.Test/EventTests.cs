@@ -60,7 +60,7 @@ namespace Eventor.Test
             var mapper = mapperConfig.CreateMapper();
             var service = new EventService(repository.Object, mapper);
 
-            var actual = service.GetEvents();
+            var actual = service.GetFutureEvents();
             var expected = 2;
 
             Assert.Equal(actual.Count(), expected);

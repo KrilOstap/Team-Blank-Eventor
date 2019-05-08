@@ -37,9 +37,9 @@ namespace DataAccess.Data.Repositories
         public IEnumerable<Event> GetAll()
         {
             return db.Events.AsNoTracking().Include(e => e.Organizer)
-                .Where(e => e.Date > DateTime.Now).OrderBy(e => e.Date);
-        }
-     
+                .OrderBy(e => e.Date);
+        }        
+
         public Event GetById(string id)
         {
             return db.Events.AsNoTracking()

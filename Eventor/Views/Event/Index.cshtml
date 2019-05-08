@@ -14,7 +14,7 @@
         </div>
         @if (User.Identity.IsAuthenticated)
         {
-            @if (!User.IsInRole("Organizer"))
+            @if (User.IsInRole("Organizer"))
             {
                 <div class="w-25">
                     <a asp-action="Create" class="btn btn-success">Create event</a>
@@ -56,7 +56,8 @@
                             <p class="card-text text-align">@eventModel.Description</p>
                         }
 
-                        <a href="/event/details/@eventModel.Id" class="btn btn-info">Details</a>
+                        <a asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-info">Details</a>
+
                     </div>
                 </div>
             </div>

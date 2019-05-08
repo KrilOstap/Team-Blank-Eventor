@@ -52,6 +52,11 @@ namespace Eventor
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                options.ValidationInterval = TimeSpan.Zero;
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -72,18 +77,22 @@ namespace Eventor
             services.AddSingleton(mapper);
            
             services.AddOptions();
-            services.Configure<MailConfig>(Configuration.GetSection("Mailing"));            
+            services.Configure<MailConfig>(Configuration.GetSection("Mailing"));
+
+            services.AddSingleton<IImageConfig, ImageConfig>
+                (_ => new ImageConfig { WeebRoot = HostingEnvironment.WebRootPath });
 
             services.AddTransient<IRepository<Event>, EventRepository>();
             services.AddTransient<IRepository<Subscription>, SubscriptionRepository>();
             services.AddTransient<IRepository<ApplicationUser>, ApplicationUserRepository>();
-
-            services.AddSingleton<IImageConfig, ImageConfig>( _ => new ImageConfig { WeebRoot = HostingEnvironment.WebRootPath});
+            
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<IEventService, EventService>();
-            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IImageService, ImageService>();
-            services.AddTransient<ISubscriptionService, SubscriptionService>();           
+            services.AddTransient<ISubscriptionService, SubscriptionService>();
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
         }
 

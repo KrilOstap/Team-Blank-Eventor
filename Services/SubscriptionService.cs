@@ -72,5 +72,11 @@ namespace Services
            return mapper.Map<IEnumerable<Subscription>, IEnumerable<SubscriptionDTO>>
                 (repository.GetAll().Where(s => s.UserId == id));
         }
+
+        public int GetNumberOfSubscribers(string eventId)
+        {
+            var subscribers = repository.GetAll().Where(e => e.EventId == eventId);
+            return subscribers?.Count() ?? 0;
+        }
     }
 }
