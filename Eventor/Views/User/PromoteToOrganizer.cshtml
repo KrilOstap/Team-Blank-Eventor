@@ -4,6 +4,14 @@
 }
 
 <h1>PromoteToOrganizer</h1>
+@if (Model != null)
+{
+    @if (Model.LogginFailed)
+    {
+        <p class="text-danger">Invalid password</p>
+    }
+}
+
 
 <form method="post">
     <div class="row">
@@ -27,9 +35,9 @@
                 <input asp-for="Password" type="password" class="form-control">
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-          
+
             <div id="create-margin">
-                <input type="submit" value="Save" class="btn btn-success" />                
+                <input type="submit" value="Save" class="btn btn-success" />
             </div>
 
         </div>

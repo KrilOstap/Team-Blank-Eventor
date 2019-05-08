@@ -55,7 +55,10 @@ namespace Eventor.Data.Repositories
 
         public void Update(ApplicationUser item)
         {
-            db.Users.Update(item);
+            var user = db.ApplicationUsers.Find(item.Id);
+            user.FirstName = item.FirstName;
+            user.LastName = item.LastName;
+            db.ApplicationUsers.Update(user);
         }
        
         public virtual void Dispose(bool disposing)
