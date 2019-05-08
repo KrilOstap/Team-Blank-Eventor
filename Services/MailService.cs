@@ -28,7 +28,8 @@ namespace Eventor.Services
         {
             using (var message = new MailMessage())
             {
-                var subscriptions = repository.GetAll().Where(s => s.AreNotificationsEnabled && s.EventId == email.EventId && s.Event.OrganizerId == userId);
+                var subscriptions = repository.GetAll()
+                    .Where(s => s.AreNotificationsEnabled && s.EventId == email.EventId && s.Event.OrganizerId == userId);
 
                 foreach (var subscription in subscriptions)
                 {

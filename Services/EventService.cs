@@ -23,9 +23,21 @@ namespace Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<EventDTO> GetEvents()
+        public IEnumerable<EventDTO> GetFutureEvents()
         {
-            return repository.GetAll().Select(item => mapper.Map<Event, EventDTO>(item));
+            return mapper.Map<IEnumerable<Event>, IEnumerable<EventDTO>>
+                (repository.GetAll().Where(e => e.Date > DateTime.Now));
+        }
+
+        public IEnumerable<EventDTO> GetAllEvents()
+        {
+            return mapper.Map<IEnumerable<Event>, IEnumerable<EventDTO>>(repository.GetAll());
+        }
+
+        public IEnumerable<EventDTO> GetAllEvents(string organizerId)
+        {
+            return mapper.Map<IEnumerable<Event>, IEnumerable<EventDTO>>
+                (repository.GetAll().Where(e => e.OrganizerId == organizerId));
         }
 
         public EventDTO GetById(string id)

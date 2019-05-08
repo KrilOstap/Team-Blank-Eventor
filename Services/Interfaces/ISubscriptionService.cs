@@ -14,5 +14,6 @@ namespace Services.Interfaces
         bool IsSubscribed(string userId, string eventId);
         void UnsubscribeAll(string eventId);
         IEnumerable<SubscriptionDTO> GetSubscriptionsForUser(string id);
+        int GetNumberOfSubscribers(string eventId);
     }
 }

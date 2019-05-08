@@ -1,16 +1,58 @@
-﻿
+﻿@model ProfileModel
 @{
     ViewData["Title"] = "Profile";
 }
 
 <h1>Profile</h1>
+<p1>@Model.Email</p1>
 
-@if (User.Identity.IsAuthenticated)
-{
-    @if (!User.IsInRole("Organizer"))
+<div class="row card-columns">
+    @if (Model.Events.Count() > 0)
     {
-        <div class="w-25">
-            <a asp-action="PromoteToOrganizer" asp-controller="User" class="btn btn-success">Become organizer</a>
-        </div>
+        @foreach (var eventModel in Model.Events)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <h3 class="card-header text-center">@eventModel.Title</h3>
+
+                    @if (!string.IsNullOrEmpty(eventModel.ImagePath))
+                    {
+                        <img class="h-50 card-img-top" src="~/Images/Events/@eventModel.ImagePath" alt="Card image cap">
+                    }
+                    else
+                    {
+                        <img class="h-50 card-img-top" src="~/Images/content/default.png" alt="Card image cap">
+                    }
+                        <div class="card-body">
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">@eventModel.City @eventModel.Address @eventModel.Number</li>
+                                <li class="list-group-item">@eventModel.Date</li>
+                            </ul>
+
+                            @if (eventModel.Description.Length > 80)
+                            {
+                                <p class="card-text text-align">@(string.Concat(eventModel.Description.Substring(0, 80), "..."))</p>
+                            }
+                            else
+                            {
+                                <p class="card-text text-align">@eventModel.Description</p>
+                            }
+
+                            <a asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-info">Details</a>
+                            @if (Model.IsOwner)
+                            {                              
+                                <a asp-controller="Event" asp-action="Remove" asp-route-id="@eventModel.Id" class="btn btn-outline-danger">Delete</a>
+                                <a asp-controller="Event" asp-action="Edit" asp-route-id="@eventModel.Id" class="btn btn-outline-primary">Edit</a>
+                            }
+
+                        </div>
+                </div>
+            </div>
+        }
     }
-}
+    else
+    {
+        <p>There aren't any available events</p>//
+    }
+</div>

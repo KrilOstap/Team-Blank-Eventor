@@ -12,6 +12,7 @@ using Services.Interfaces;
 
 namespace Eventor.Controllers
 {
+    [Authorize]
     public class SubscriptionController : Controller
     {
         private readonly ISubscriptionService subscriptionService;
@@ -36,7 +37,7 @@ namespace Eventor.Controllers
 
             subscriptionService.Add(subscription);
 
-            return RedirectToAction("Details", "Event", new { Id  = id });
+            return RedirectToAction("Details", "Event", new { eventId  = id });
         }
 
         public IActionResult Unsubscribe(string id)
@@ -52,7 +53,7 @@ namespace Eventor.Controllers
             string UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             subscriptionService.Delete(UserId, id);
 
-            return RedirectToAction("Details", "Event", new { Id = id } );
+            return RedirectToAction("Details", "Event", new { eventId = id } );
         }
 
         public IActionResult Index(string id)

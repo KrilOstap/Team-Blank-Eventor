@@ -28,6 +28,8 @@ namespace Eventor.Models
 
         public bool IsOwner { get; set; }
 
+        public int NumberOfSubscribers { get; set; }
+
         public string OrganizerId { get; set; }
 
         public ApplicationUserDTO Organizer { get; set; }

@@ -27,21 +27,30 @@
 
             <label>Address</label>
             <p>@($"{Model.City}, {Model.Address} {Model.Number}")</p>
+            
+            <a asp-controller="User" asp-action="Profile" asp-route-organizerId="@Model.OrganizerId">Organizer</a>
 
+           
             @if (Model.IsOwner)
             {
+                <label>Subscribers</label>
+                <p>@Model.NumberOfSubscribers</p>
                 <a asp-controller="Event" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
                 <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
             }
 
-            @if (!Model.IsSubscribed)
+            @if (User.Identity.IsAuthenticated)
             {
-                <a asp-controller="Subscription" asp-action="Subscribe" asp-route-id="@Model.Id" class="btn btn-outline-success">Subscribe</a>
+                @if (Model.IsSubscribed)
+                {
+                    <a asp-controller="Subscription" asp-action="UnsubscribeFromEvent" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Unsubscribe</a>
+                }
+                else
+                {
+                    <a asp-controller="Subscription" asp-action="Subscribe" asp-route-id="@Model.Id" class="btn btn-outline-success">Subscribe</a>
+                }
             }
-            else
-            {
-                <a asp-controller="Subscription" asp-action="UnsubscribeFromEvent" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Unsubscribe</a>
-            }
+
         </div>
 
         <div class="col--event-desc">

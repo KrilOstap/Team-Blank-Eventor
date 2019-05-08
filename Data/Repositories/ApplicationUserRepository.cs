@@ -20,8 +20,8 @@ namespace Eventor.Data.Repositories
         }
 
         public void Add(ApplicationUser item)
-        {
-            db.Users.Add(item);
+        {                       
+            db.Users.Add(item);            
         }
 
         public void DeleteById(string id)
