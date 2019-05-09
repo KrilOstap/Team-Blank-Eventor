@@ -4,6 +4,7 @@ using DataAccess.Data.Interfaces;
 using DataAccess.Data.Repositories;
 using DataAccess.Entities;
 using Eventor.Data;
+using Eventor.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Services;
@@ -25,6 +26,7 @@ namespace Eventor.Test
             Mapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Subscription, SubscriptionDTO>();
+                cfg.CreateMap<SubscriptionDTO, Subscription>();
             })
            .CreateMapper();
         }
@@ -54,14 +56,19 @@ namespace Eventor.Test
         [Fact]
         public void AddTest()
         {
-            var repository = SetupRepository();
-
+            var repository = new Mock<IRepository<Subscription>>();           
             var service = new SubscriptionService(repository.Object, Mapper);
-            var expected = 2;
 
-            var actual = service.GetSubscriptions("1");
+            var expected = new SubscriptionDTO
+            {
+                Id = "1",
+                EventId = "1",
+                UserId = "1"
+            };
 
-            Assert.Equal(actual.Count(), expected);
+            service.Add(expected);
+
+            repository.Verify(r => r.Add(It.IsAny<Subscription>()), Times.Once);
         }
 
         [Fact]
