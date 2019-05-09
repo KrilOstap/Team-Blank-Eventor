@@ -28,13 +28,15 @@ namespace Eventor.Test
             context.SaveChanges();
 
             var repository = new EventRepository(context);
-            var actual = repository.GetAll().ToArray();
             var expected = 2;
+
+            var actual = repository.GetAll().ToArray();    
+            
             Assert.Equal(actual.Count(), expected);
         }
 
         [Fact]
-        public void GetEventsTest()
+        public void GetSubscriptionsTest()
         {
             var repository = new Mock<IRepository<Event>>();
             repository.Setup(r => r.GetAll()).Returns(new List<Event>
@@ -59,9 +61,9 @@ namespace Eventor.Test
 
             var mapper = mapperConfig.CreateMapper();
             var service = new EventService(repository.Object, mapper);
-
-            var actual = service.GetFutureEvents();
             var expected = 2;
+
+            var actual = service.GetFutureEvents();            
 
             Assert.Equal(actual.Count(), expected);
         }

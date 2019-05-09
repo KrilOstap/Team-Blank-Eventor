@@ -13,7 +13,6 @@ using Services.DTO;
 using Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Eventor.Data.Entities;
-using X.PagedList;
 using System.Security.Claims;
 
 namespace Eventor.Controllers
@@ -35,12 +34,9 @@ namespace Eventor.Controllers
             this.mapper = mapper;
         }
 
-        public IActionResult Index(int? pageNumber, string userId)
-        {
-            var events = eventService.GetFutureEvents();
-            var currentPage = pageNumber ?? 1;
-            var onePageOfEvents = events.ToPagedList(currentPage, 4);
-            return View(onePageOfEvents);
+        public IActionResult Index()
+        {                    
+            return View(eventService.GetFutureEvents());
         }
 
         [Authorize(Roles = "Organizer")]
