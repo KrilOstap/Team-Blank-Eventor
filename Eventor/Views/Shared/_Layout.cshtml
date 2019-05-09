@@ -41,8 +41,8 @@
                             @if (User.IsInRole("Organizer"))
                             {
                                 <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="User" asp-action="Profile" 
-                                    asp-route-organizerId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
+                                    <a class="nav-link text-dark" asp-controller="User" asp-action="Profile"
+                                       asp-route-organizerId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
                                 </li>
                             }
                             else
