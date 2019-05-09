@@ -13,8 +13,7 @@ using Services.DTO;
 using Services.Interfaces;
 
 namespace Eventor.Controllers
-{
-    [Authorize]
+{    
     public class UserController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -52,17 +51,20 @@ namespace Eventor.Controllers
             return View(profile);
         }
 
+        [Authorize]
         public IActionResult SuccessfulPromotion()
         {
             return View();
         }
 
+        [Authorize]
         public IActionResult PromoteToOrganizer()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PromoteToOrganizer([Bind("FirstName",
             "LastName", "Password")] PromotionModel promotion)
