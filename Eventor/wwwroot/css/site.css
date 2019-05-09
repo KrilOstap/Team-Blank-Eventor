@@ -112,7 +112,7 @@ main.pb-3 .container {
 	margin-bottom: 26px;
 }
 
-.col--event-datail {
+.col--event-detail {
 	width: calc(100% - 315px);
 	padding: 0 15px;
 	margin-bottom: 26px;
@@ -128,7 +128,7 @@ main.pb-3 .container {
 }
 
 @media (max-width: 767px) {
-	.col--event-image, .col--event-datail {
+	.col--event-image, .col--event-detail {
 		width: 100%;
 		
 	}
@@ -197,3 +197,15 @@ footer a {
 		padding: 0;
 		line-height: normal;
 	}
+
+.card-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	line-height: 24px;
+	max-height: 72px;
+	height: 72px;
+	margin-top: 10px;
+}

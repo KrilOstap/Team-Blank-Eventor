@@ -44,7 +44,7 @@
 
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">@eventModel.City, @eventModel.Address @eventModel.Number</li>
-                            <li class="list-group-item">@eventModel.Date</li>
+                            <li class="list-group-item">@eventModel.Date.ToString("dd.MM.yyyy hh:mm")</li>
                         </ul>
 
                         @if (eventModel.Description.Length > 80)
