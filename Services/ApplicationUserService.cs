@@ -29,6 +29,7 @@ namespace Services
         public void UpdateInformation(ApplicationUser user)
         {
             repository.Update(user);
+            repository.Save();
         }
     }
 }
