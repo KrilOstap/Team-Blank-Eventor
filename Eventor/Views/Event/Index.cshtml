@@ -17,7 +17,7 @@
             @if (User.IsInRole("Organizer"))
             {
                 <div class="w-25">
-                    <a asp-action="Create" class="btn btn-success">Create event</a>
+                    <a asp-action="Create" class="btn btn-outline-success">Create event</a>
                 </div>
             }          
         }
@@ -43,7 +43,7 @@
                     <div class="card-body">
 
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">@eventModel.City @eventModel.Address @eventModel.Number</li>
+                            <li class="list-group-item">@eventModel.City, @eventModel.Address @eventModel.Number</li>
                             <li class="list-group-item">@eventModel.Date</li>
                         </ul>
 
@@ -56,7 +56,7 @@
                             <p class="card-text text-align">@eventModel.Description</p>
                         }
 
-                        <a asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-info">Details</a>
+                        <a asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-outline-info">Details</a>
 
                     </div>
                 </div>
