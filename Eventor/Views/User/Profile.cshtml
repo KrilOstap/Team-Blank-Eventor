@@ -57,7 +57,7 @@
                             <p class="card-text text-align">@eventModel.Description</p>
                         }
 
-                        <a asp-controller="Event" asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-info">Details</a>
+                        <a asp-controller="Event" asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-outline-info">Details</a>
                         @if (Model.IsOwner)
                         {
                             <a asp-controller="Event" asp-action="Remove" asp-route-id="@eventModel.Id" class="btn btn-outline-danger">Delete</a>
