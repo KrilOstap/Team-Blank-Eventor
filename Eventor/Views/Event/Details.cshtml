@@ -3,7 +3,7 @@
     ViewData["Title"] = "Details";
 }
 
-	<h2 class="event-title">@Model.Title</h2>
+	<h3 class="event-title">@Model.Title</h3>
     <div class="row row_event-datail">
         <div class="col--event-image">
             <div class="card">
@@ -18,18 +18,15 @@
             </div>
         </div>
 
-        <div class="col--event-datail">
+        <div class="col--event-detail">
             <label>Date</label>
             <p>@Model.Date.ToString("dd.MM.yyyy hh:mm")</p>
 
-            <label>Organizer Email</label>
-            <p>@Model.Organizer.Email</p>
+            <label>Organizer</label>
+            <p><a asp-controller="User" asp-action="Profile" asp-route-organizerId="@Model.OrganizerId">@Model.Organizer.Email</a></p>
 
             <label>Address</label>
             <p>@($"{Model.City}, {Model.Address} {Model.Number}")</p>
-            
-            <a asp-controller="User" asp-action="Profile" asp-route-organizerId="@Model.OrganizerId">Organizer</a>
-
            
             @if (Model.IsOwner)
             {
