@@ -3,8 +3,26 @@
     ViewData["Title"] = "Profile";
 }
 
-<h1>Profile</h1>
-<p1>@Model.Email</p1>
+<!--
+<div class="card mb-3 ">
+    <div class="row no-gutters">
+        <div class="col-md-3">
+            <img src="https://lakewangaryschool.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg" class="card-img" style="width: 100%">
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <h4 class="card-title">Profile</h4>
+                <hr />
+                <p class="card-text"><strong>First Name: </strong>@Model.FirstName</p>
+                <p class="card-text"><strong>Last Name: </strong>@Model.LastName</p>
+                <p class="card-text"><strong>Email: </strong>@Model.Email</p>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+<h3 class="text-center" style="margin-left: 1%">@Model.FirstName @Model.LastName</h3>
+<hr />
 
 <div class="row card-columns">
     @if (Model.Events.Count() > 0)
@@ -23,30 +41,30 @@
                     {
                         <img class="h-50 card-img-top" src="~/Images/content/default.png" alt="Card image cap">
                     }
-                        <div class="card-body">
+                    <div class="card-body">
 
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">@eventModel.City @eventModel.Address @eventModel.Number</li>
-                                <li class="list-group-item">@eventModel.Date</li>
-                            </ul>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">@eventModel.City @eventModel.Address @eventModel.Number</li>
+                            <li class="list-group-item">@eventModel.Date</li>
+                        </ul>
 
-                            @if (eventModel.Description.Length > 80)
-                            {
-                                <p class="card-text text-align">@(string.Concat(eventModel.Description.Substring(0, 80), "..."))</p>
-                            }
-                            else
-                            {
-                                <p class="card-text text-align">@eventModel.Description</p>
-                            }
+                        @if (eventModel.Description.Length > 80)
+                        {
+                            <p class="card-text text-align">@(string.Concat(eventModel.Description.Substring(0, 80), "..."))</p>
+                        }
+                        else
+                        {
+                            <p class="card-text text-align">@eventModel.Description</p>
+                        }
 
-                            <a asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-outline-info">Details</a>
-                            @if (Model.IsOwner)
-                            {                              
-                                <a asp-controller="Event" asp-action="Remove" asp-route-id="@eventModel.Id" class="btn btn-outline-danger">Delete</a>
-                                <a asp-controller="Event" asp-action="Edit" asp-route-id="@eventModel.Id" class="btn btn-outline-primary">Edit</a>
-                            }
+                        <a asp-controller="Event" asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-outline-info">Details</a>
+                        @if (Model.IsOwner)
+                        {
+                            <a asp-controller="Event" asp-action="Remove" asp-route-id="@eventModel.Id" class="btn btn-outline-danger">Delete</a>
+                            <a asp-controller="Event" asp-action="Edit" asp-route-id="@eventModel.Id" class="btn btn-outline-primary">Edit</a>
+                        }
 
-                        </div>
+                    </div>
                 </div>
             </div>
         }
