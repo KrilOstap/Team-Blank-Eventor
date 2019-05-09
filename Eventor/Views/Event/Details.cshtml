@@ -4,33 +4,33 @@
 }
 
 	<h3 class="event-title">@Model.Title</h3>
-    <div class="row row_event-datail">
-        <div class="col--event-image">
+    <div class="row">
+        <div class="col-md-4">
             <div class="card">
                 @if (!string.IsNullOrEmpty(Model.ImagePath))
                 {
-                    <img class="h-50 card-img-top" src="~/Images/Events/@Model.ImagePath" alt="Card image cap">
+                    <img class="card-img" src="~/Images/Events/@Model.ImagePath" alt="Card image cap">
                 }
                 else
                 {
-                    <img class="h-50 card-img-top" src="~/Images/Content/default.png" alt="Card image cap">
+                    <img class="card-img" src="~/Images/Content/default.png" alt="Card image cap">
                 }
             </div>
         </div>
 
-        <div class="col--event-detail">
-            <label>Date</label>
+        <div class="col-md-4">
+            <label>Date:</label>
             <p>@Model.Date.ToString("dd.MM.yyyy hh:mm")</p>
 
-            <label>Organizer</label>
-            <p><a asp-controller="User" asp-action="Profile" asp-route-organizerId="@Model.OrganizerId">@Model.Organizer.Email</a></p>
+            <label>Organizer:</label>
+            <p>@Model.Organizer.FirstName @Model.Organizer.LastName</p>
 
-            <label>Address</label>
+            <label>Address:</label>
             <p>@($"{Model.City}, {Model.Address} {Model.Number}")</p>
-           
+
             @if (Model.IsOwner)
             {
-                <label>Subscribers</label>
+                <label>Subscribers:</label>
                 <p>@Model.NumberOfSubscribers</p>
                 <a asp-controller="Event" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
                 <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
@@ -53,6 +53,15 @@
         <div class="col--event-desc">
             <div class="card">
                 @Model.Description
+            </div>
+        </div>
+
+        <div class="col--event-desc">
+            <div class="card">
+                <div class="row text-center">
+                <p class="col-md-5">Do you want to see all the events of this organizer?</p>
+                <a asp-controller="User" asp-action="Profile" asp-route-organizerId="@Model.OrganizerId" class="col-md-2 btn btn-outline-warning">Events</a>
+                </div>
             </div>
         </div>
     </div>

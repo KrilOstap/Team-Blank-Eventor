@@ -125,6 +125,7 @@ main.pb-3 .container {
 
 .col--event-desc .card {
 	padding: 14px;
+    margin-top: 15px;
 }
 
 @media (max-width: 767px) {
