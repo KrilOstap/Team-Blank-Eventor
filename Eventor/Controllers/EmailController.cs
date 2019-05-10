@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,7 +25,7 @@ namespace Eventor.Controllers
             this.mapper = mapper;
         }
 
-        public IActionResult EmailError()
+        public IActionResult EmailError(string error)
         {
             return View();
         }
@@ -45,9 +46,9 @@ namespace Eventor.Controllers
             {
                 service.Send(emailToSend, userId);
             }
-            catch (Exception e)
+            catch (SmtpException ex)
             {
-                return View(nameof(EmailError));
+                return RedirectToAction("EmailError", new { error = ex.Message});
             }
 
             return RedirectToAction("Index", "Event", new { Id = userId });

@@ -50,14 +50,7 @@
             </div>
             <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">                
                 <a asp-controller="Event" asp-action="Details" asp-route-eventId="@subscription.Event.Id" class="btn btn-outline-info">Details</a>
-                <a asp-controller="Subscription" asp-action="Unsubscribe" asp-route-id="@subscription.EventId" class="btn btn-outline-secondary m-2">Unsubscribe</a>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    @if (User.IsInRole("Organizer"))
-                    {
-                        <a asp-controller="Email" asp-action="SendEmail" asp-route-id="@subscription.EventId" class="btn btn-outline-secondary">Send message</a>
-                    }
-                }                
+                <a asp-controller="Subscription" asp-action="Unsubscribe" asp-route-id="@subscription.EventId" class="btn btn-outline-secondary m-2">Unsubscribe</a>                     
             </div>
         </div>
    

@@ -27,13 +27,14 @@
 
             <label>Address</label>
             <p>@($"{Model.City}, {Model.Address} {Model.Number}")</p>
-           
+
             @if (Model.IsOwner)
             {
                 <label>Subscribers</label>
                 <p>@Model.NumberOfSubscribers</p>
                 <a asp-controller="Event" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
-                <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
+                <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>            
+                <a asp-controller="Email" asp-action="SendEmail" asp-route-id="@Model.Id" class="btn btn-outline-success">Send message</a>                          
             }
 
             @if (User.Identity.IsAuthenticated)

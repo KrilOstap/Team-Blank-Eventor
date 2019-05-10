@@ -20,16 +20,16 @@ namespace Services
             this.repository = repository;
             this.mapper = mapper;
         }
-
-        public ApplicationUserDTO GetById(string id)
-        {
-            return mapper.Map<ApplicationUser, ApplicationUserDTO>(repository.GetById(id));
-        }
-
+    
         public void UpdateInformation(ApplicationUser user)
         {
             repository.Update(user);
             repository.Save();
+        }
+
+        public ApplicationUserDTO GetById(string id)
+        {
+            return mapper.Map<ApplicationUser, ApplicationUserDTO>(repository.GetById(id));
         }
     }
 }
