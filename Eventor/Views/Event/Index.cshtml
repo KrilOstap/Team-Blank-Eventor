@@ -1,6 +1,4 @@
-﻿@using X.PagedList.Mvc.Core
-@using X.PagedList
-@model IPagedList<EventDTO>
+﻿@model List<EventDTO>
 
 @{
     ViewData["Title"] = "Events";
@@ -43,25 +41,25 @@
 						}
 						<div class="card-body">
 
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">@eventModel.City, @eventModel.Address @eventModel.Number</li>
-								<li class="list-group-item">@eventModel.Date.ToString("dd.MM.yyyy hh:mm")</li>
-							</ul>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">@eventModel.City, @eventModel.Address @eventModel.Number</li>
+                                <li class="list-group-item">@eventModel.Date.ToString("dd.MM.yyyy hh:mm")</li>
+                            </ul>
 
-								@if (eventModel.Description.Length > 80)
-								{
-									<p class="card-text text-align">@(string.Concat(eventModel.Description.Substring(0, 80), "..."))</p>
-								}
-								else
-								{
-									<p class="card-text text-align">@eventModel.Description</p>
-								}
+                            @if (eventModel.Description.Length > 80)
+                            {
+                                <p class="card-text text-align">@(string.Concat(eventModel.Description.Substring(0, 80), "..."))</p>
+                            }
+                            else
+                            {
+                                <p class="card-text text-align">@eventModel.Description</p>
+                            }
 
-								<a asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-outline-info">Details</a>
-							</div>
-						</div>
-					</div>
-			 }
+                            <a asp-action="Details" asp-route-eventId="@eventModel.Id" class="btn btn-outline-info">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
         }
         else
         {
@@ -70,4 +68,3 @@
     </div>
 </div>
 
-@Html.PagedListPager(Model, pageNumber => Url.Action("Index", new { pageNumber }))
