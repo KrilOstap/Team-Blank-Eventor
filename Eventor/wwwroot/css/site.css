@@ -20,7 +20,7 @@ html {
 
 .carousel-item img {
     width: 100%;
-    height: 90vh
+    height: 85vh
 }
 
 .border-top {
@@ -163,7 +163,6 @@ main.pb-3 .container {
     width: 100%;
     height: 244px;
     object-fit: cover;
-	margin-top: 16px;
 }
 
 .nav-item a, .nav-item button, footer {
@@ -208,4 +207,8 @@ footer a {
 	max-height: 72px;
 	height: 72px;
 	margin-top: 10px;
+}
+
+.sub-card {
+    margin: 15px 0 15px 0;
 }

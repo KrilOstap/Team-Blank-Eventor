@@ -21,24 +21,25 @@
         }
     </div>
     <hr>
-    <div class="row card-columns">
+    <div class="row">
         @if (Model.Count > 0)
-        {
-            @foreach (var eventModel in Model)
-            {
-                <div class="col-md-3">
-                    <div class="card">
-                        <h3 class="card-header text-center">@eventModel.Title</h3>
-
-                        @if (!string.IsNullOrEmpty(eventModel.ImagePath))
-                        {
-                            <img class="h-50 card-img-top" src="~/Images/Events/@eventModel.ImagePath" alt="Card image cap">
-                        }
-                        else
-                        {
-                            <img class="h-50 card-img-top" src="~/Images/Сontent/default.png" alt="Card image cap">
-                        }
-                        <div class="card-body">
+		{
+			 @foreach (var eventModel in Model)
+			 {
+				<div class="col-md-3 mb-3">
+					<div class="card">
+                        <div class="card-header text-center d-flex justify-content-center">
+						<h5 class="d-md-block">@eventModel.Title</h5>
+                        </div>
+						@if (!string.IsNullOrEmpty(eventModel.ImagePath))
+						{
+							<img class=" card-img-top" src="~/Images/Events/@eventModel.ImagePath" alt="Card image cap">
+						}
+						else
+						{
+							<img class=" card-img-top" src="~/Images/content/default.png" alt="Card image cap">
+						}
+						<div class="card-body">
 
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">@eventModel.City, @eventModel.Address @eventModel.Number</li>
