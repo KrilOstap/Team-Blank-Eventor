@@ -8,7 +8,7 @@ namespace Services.Interfaces
 {
     public interface IApplicationUserService
     {
-        ApplicationUserDTO GetById(string id);
         void UpdateInformation(ApplicationUser user);
+        ApplicationUserDTO GetById(string id);
     }
 }

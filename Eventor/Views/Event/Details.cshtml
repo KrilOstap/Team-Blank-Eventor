@@ -33,7 +33,8 @@
                 <label>Subscribers:</label>
                 <p>@Model.NumberOfSubscribers</p>
                 <a asp-controller="Event" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
-                <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
+                <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>            
+                <a asp-controller="Email" asp-action="SendEmail" asp-route-id="@Model.Id" class="btn btn-outline-success">Send message</a>                          
             }
 
             @if (User.Identity.IsAuthenticated)

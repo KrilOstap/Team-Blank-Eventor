@@ -40,14 +40,20 @@ namespace Eventor.Tests
         [Fact]
         public void GetByIdTest()
         {
+            var expected = new ApplicationUserDTO
+            {
+                Id = "1",
+                FirstName = "Ostap"
+            };
+
             var repository = new Mock<IRepository<ApplicationUser>>();
-            repository.Setup(r => r.Update(It.IsAny<ApplicationUser>()));
+            repository.Setup(r => r.GetById(expected.Id)).Returns(new ApplicationUser { Id = "1"});
             ApplicationUserService service = new ApplicationUserService(repository.Object, Mapper);
 
-            service.UpdateInformation(new ApplicationUser { Id = "1" });
+            var actual = service.GetById(expected.Id);
 
-            repository.Verify(r => r.Update(It.IsAny<ApplicationUser>()), Times.Once);
-            repository.Verify(r => r.Save(), Times.Once);
+            Assert.Equal(expected.Id, actual.Id);
         }
+
     }
 }

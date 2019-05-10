@@ -69,6 +69,20 @@ namespace Eventor.Test
             service.Add(expected);
 
             repository.Verify(r => r.Add(It.IsAny<Subscription>()), Times.Once);
+            repository.Verify(r => r.Save(), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteTest()
+        {
+            var repository = SetupRepository();
+            var service = new SubscriptionService(repository.Object, Mapper);
+
+            service.Delete(eventId: "1", userId: "1");
+
+            repository.Verify(r => r.GetAll(), Times.Once);
+            repository.Verify(r => r.DeleteById(It.IsAny<string>()), Times.Once);
+            repository.Verify(r => r.Save(), Times.Once);
         }
 
         [Fact]
