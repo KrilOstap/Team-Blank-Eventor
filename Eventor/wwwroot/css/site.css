@@ -20,7 +20,7 @@ html {
 
 .carousel-item img {
     width: 100%;
-    height: 90vh
+    height: 85vh
 }
 
 .border-top {
@@ -125,7 +125,6 @@ main.pb-3 .container {
 
 .col--event-desc .card {
 	padding: 14px;
-    margin-top: 15px;
 }
 
 @media (max-width: 767px) {
