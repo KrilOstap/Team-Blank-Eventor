@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label>Date:</label>
             <p>@Model.Date.ToString("dd.MM.yyyy hh:mm")</p>
 
@@ -45,7 +45,7 @@
                 }
                 else
                 {
-                    <a asp-controller="Subscription" asp-action="Subscribe" asp-route-id="@Model.Id" class="btn btn-outline-success">Subscribe</a>
+                    <a asp-controller="Subscription" asp-action="Subscribe" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Subscribe</a>
                 }
             }
 
