@@ -12,7 +12,7 @@
         </div>
         @if (User.Identity.IsAuthenticated)
         {
-            @if (User.IsInRole("Organizer"))
+            @if (User.IsInRole("Organizer") || User.IsInRole("Admin"))
             {
                 <div class="w-25">
                     <a asp-action="Create" class="btn btn-outline-success">Create event</a>

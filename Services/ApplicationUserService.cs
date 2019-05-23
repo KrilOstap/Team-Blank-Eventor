@@ -31,5 +31,10 @@ namespace Services
         {
             return mapper.Map<ApplicationUser, ApplicationUserDTO>(repository.GetById(id));
         }
+
+        public IEnumerable<ApplicationUserDTO> GetAll()
+        {
+            return mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<ApplicationUserDTO>>(repository.GetAll());
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace Eventor.Controllers
             return View(eventService.GetFutureEvents());
         }
 
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = "Organizer, Admin")]
         public IActionResult Create()
         {
             return View();
@@ -47,7 +47,7 @@ namespace Eventor.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = "Organizer, Admin")]
         public IActionResult Create([Bind("Date", "Title", "Description", "City", "Address", "Number")]
         EventDTO @event, IFormFile file)
         {
@@ -66,28 +66,24 @@ namespace Eventor.Controllers
             return View(@event);
         }
 
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = "Organizer, Admin")]
         public IActionResult Remove(string id)
         {
-            EventDTO @event = eventService.GetById(id);
-            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            EventDTO @event = eventService.GetById(id);            
 
             if (@event == null)
             {
                 return NotFound();
             }
-
-            if (currentUserId == @event.OrganizerId)
-            {
-                subscriptionService.UnsubscribeAll(id);
-                eventService.Delete(id);
-                imageService.Delete(@event.ImagePath);
-            }
+           
+            subscriptionService.UnsubscribeAll(id);
+            eventService.Delete(id);
+            imageService.Delete(@event.ImagePath);            
 
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = "Organizer, Admin")]
         public IActionResult Edit(string id)
         {
             EventDTO @event = eventService.GetById(id);
@@ -96,7 +92,7 @@ namespace Eventor.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = "Organizer, Admin")]
         public IActionResult Edit([Bind("Id, Date", "Title", "Description", "City",
         "Address", "Number, ImagePath")]EventDTO @event)
         {

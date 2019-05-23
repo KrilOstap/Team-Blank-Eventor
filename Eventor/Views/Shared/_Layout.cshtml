@@ -41,14 +41,23 @@
                             @if (User.IsInRole("Organizer"))
                             {
                                 <li class="nav-item">
-									<a class="nav-link text-light" asp-controller="User" asp-action="Profile" 
-                                    asp-route-organizerId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
+                                    <a class="nav-link text-light" asp-controller="User" asp-action="Profile"
+                                       asp-route-organizerId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
                                 </li>
                             }
                             else
                             {
+                                @if (!User.IsInRole("Admin"))
+	                            {
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="PromoteToOrganizer">Become an Organizer</a>
+                                </li>
+	                            }
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-controller="User" asp-action="ManageUsers">Manage Users</a>
                                 </li>
                             }
                         }

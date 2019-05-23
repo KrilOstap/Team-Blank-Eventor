@@ -14,6 +14,8 @@ namespace Eventor.Data.Entities
 
         public string LastName { get; set; }
 
+        public bool AppliedForPromotion { get; set; }
+
         ICollection<Event> Events { get; set; }
 
         ICollection<Subscription> Subscriptions { get; set; }

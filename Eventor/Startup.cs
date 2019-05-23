@@ -65,9 +65,7 @@ namespace Eventor
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-            CreateRole(services.BuildServiceProvider()).Wait();
-
+            
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
@@ -129,16 +127,38 @@ namespace Eventor
         public async Task CreateRole(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var roleExists = await roleManager.RoleExistsAsync("Organizer");
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            string[] roleNames = { "Admin", "Manager"};
+            IdentityResult roleResult;
 
-            if (!roleExists)
-            {
-                IdentityResult result = await roleManager.CreateAsync(new IdentityRole("Organizer"));
+
+            foreach (var roleName in roleNames)
+            {   
+                var roleExist = await roleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
             }
 
-            var user = new ApplicationUser() { UserName = "a", Email = "a"};
-            var create = UserManager.CreateAsync(user, "s");
+            var poweruser = new ApplicationUser
+            {
+                UserName = Configuration.GetSection("UserSettings")["UserEmail"],
+                Email = Configuration.GetSection("UserSettings")["UserEmail"]
+            };
+
+            var user = await userManager.FindByEmailAsync("Eventor@gmail.com");
+
+            if (user != null)
+            {
+                var createAdmin = await userManager.CreateAsync(poweruser, "Qwerty_12345");
+
+                if (createAdmin.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(poweruser, "Admin");
+                }
+
+            }           
         }
     }
 }

@@ -13,7 +13,7 @@ using Services.DTO;
 
 namespace Eventor.Controllers
 {
-    [Authorize(Roles = "Organizer")]
+    [Authorize(Roles = "Organizer, Admin")]
     public class EmailController : Controller
     {
         private readonly IMailService service;
@@ -49,6 +49,10 @@ namespace Eventor.Controllers
             catch (SmtpException ex)
             {
                 return RedirectToAction("EmailError", new { error = ex.Message});
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("EmailError", new { error = ex.Message });
             }
 
             return RedirectToAction("Index", "Event", new { Id = userId });
