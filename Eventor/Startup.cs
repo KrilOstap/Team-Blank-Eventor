@@ -129,12 +129,16 @@ namespace Eventor
         public async Task CreateRole(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleExists = await roleManager.RoleExistsAsync("Organizer");
 
             if (!roleExists)
             {
                 IdentityResult result = await roleManager.CreateAsync(new IdentityRole("Organizer"));
             }
+
+            var user = new ApplicationUser() { UserName = "a", Email = "a"};
+            var create = UserManager.CreateAsync(user, "s");
         }
     }
 }
