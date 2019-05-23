@@ -1,0 +1,12 @@
+﻿@model IEnumerable<ApplicationUserDTO>
+@{
+    ViewData["Title"] = "ManageUsers";
+}
+
+<h1>ManageUsers</h1>
+
+@foreach (var item in Model)
+{
+    <p>@item.Email</p>
+    <a asp-controller="User" asp-action="PromotioConfirmed" asp-route-id="@item.Id" class="w-50 btn btn-outline-info">Promote</a>
+}

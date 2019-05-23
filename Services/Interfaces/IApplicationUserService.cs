@@ -10,5 +10,6 @@ namespace Services.Interfaces
     {
         void UpdateInformation(ApplicationUser user);
         ApplicationUserDTO GetById(string id);
+        IEnumerable<ApplicationUserDTO> GetAll();
     }
 }

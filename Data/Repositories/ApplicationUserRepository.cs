@@ -58,6 +58,7 @@ namespace Eventor.Data.Repositories
             var user = db.ApplicationUsers.Find(item.Id);
             user.FirstName = item.FirstName;
             user.LastName = item.LastName;
+            user.AppliedForPromotion = item.AppliedForPromotion;
             db.ApplicationUsers.Update(user);
         }
        

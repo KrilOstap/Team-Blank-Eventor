@@ -28,7 +28,7 @@
             <label>Address:</label>
             <p>@($"{Model.City}, {Model.Address} {Model.Number}")</p>
 
-            @if (Model.IsOwner)
+            @if (Model.IsOwner || User.IsInRole("Admin"))
             {
                 <label>Subscribers:</label>
                 <p>@Model.NumberOfSubscribers</p>

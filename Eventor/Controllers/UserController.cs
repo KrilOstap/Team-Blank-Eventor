@@ -52,15 +52,29 @@ namespace Eventor.Controllers
         }
 
         [Authorize]
-        public IActionResult SuccessfulPromotion()
+        public  async Task<IActionResult> PromoteToOrganizer()
         {
+            ApplicationUser user = await userManager
+                .FindByIdAsync(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (user.AppliedForPromotion)
+            {
+                return RedirectToAction("PromotionRequested");
+            }
+
             return View();
         }
 
         [Authorize]
-        public IActionResult PromoteToOrganizer()
+        public IActionResult PromotionRequested()
         {
             return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult ManageUsers()
+        {
+            return View(userService.GetAll().Where(u => u.AppliedForPromotion));
         }
 
         [HttpPost]
@@ -76,17 +90,29 @@ namespace Eventor.Controllers
                 var login = await signInManager.CheckPasswordSignInAsync(user, promotion.Password, false);
                 
                 if (user != null && !User.IsInRole("Organizer") && login.Succeeded)
-                {
-                    var result = await userManager.AddToRoleAsync(user, "Organizer");
+                {                    
+                    user.AppliedForPromotion = true;
                     user.FirstName = promotion.FirstName;
                     user.LastName = promotion.LastName;
                     userService.UpdateInformation(user);
-                    return View(nameof(SuccessfulPromotion));
+                    return View(nameof(PromotionRequested));
                 }               
             }
 
+
+
             promotion.LogginFailed = true;
             return View(promotion);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> PromotioConfirmed(string id)
+        {
+            ApplicationUser user = await userManager.FindByIdAsync(id);
+            var result = await userManager.AddToRoleAsync(user, "Organizer");
+            user.AppliedForPromotion = false;
+            userService.UpdateInformation(user);
+            return RedirectToAction("ManageUsers");
         }
     }
 }
