@@ -6,7 +6,7 @@
 <h1>Edit</h1>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -43,11 +43,12 @@
                 <textarea asp-for="Description" maxlength="500" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-outline-success" />
+            <div class="form-group row">
+                <input type="submit" value="Save" class="btn btn-outline-success w-25 ml-3" />
+
+                <a asp-action="Index" class="btn btn-outline-warning w-25 ml-3">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<a asp-action="Index" class="btn btn-outline-warning">Back to List</a>

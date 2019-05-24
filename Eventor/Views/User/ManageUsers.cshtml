@@ -3,10 +3,27 @@
     ViewData["Title"] = "ManageUsers";
 }
 
-<h1>ManageUsers</h1>
-
-@foreach (var item in Model)
+<h3 class="mb-4">Manage users</h3>
+@if (Model.Count() > 1)
 {
-    <p>@item.Email</p>
-    <a asp-controller="User" asp-action="PromotioConfirmed" asp-route-id="@item.Id" class="w-50 btn btn-outline-info">Promote</a>
+    <div>
+        <div class="row border">
+            <p class="col-md-2">Email</p>
+            <p class="col-md-4">Name</p>
+            <p class="w-50 col-md-2"></p>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="row border">
+                <p class="col-md-2">@item.Email</p>
+                <p class="col-md-4">@item.FirstName @item.LastName</p>
+                <a asp-controller="User" asp-action="PromotioConfirmed" asp-route-id="@item.Id" class="w-50 btn btn-outline-info col-md-2">Promote</a>
+            </div>
+        }
+
+    </div>
+}
+else
+{
+<h5 class="font-weight-normal">There are no users that wants to became an organizer</h5>
 }
