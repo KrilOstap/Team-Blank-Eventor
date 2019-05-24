@@ -91,7 +91,8 @@ namespace Eventor
             services.AddTransient<ISubscriptionService, SubscriptionService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            CreateRole(services.BuildServiceProvider()).Wait();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -128,7 +129,7 @@ namespace Eventor
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            string[] roleNames = { "Admin", "Manager"};
+            string[] roleNames = { "Admin", "Organizer"};
             IdentityResult roleResult;
 
 
@@ -149,7 +150,7 @@ namespace Eventor
 
             var user = await userManager.FindByEmailAsync("Eventor@gmail.com");
 
-            if (user != null)
+            if (user == null)
             {
                 var createAdmin = await userManager.CreateAsync(poweruser, "Qwerty_12345");
 
