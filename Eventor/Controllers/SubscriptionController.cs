@@ -15,14 +15,12 @@ namespace Eventor.Controllers
     [Authorize]
     public class SubscriptionController : Controller
     {
-        private readonly ISubscriptionService subscriptionService;
-        private readonly IEventService eventService;
+        private readonly ISubscriptionService subscriptionService;    
         private readonly IMapper mapper;
 
-        public SubscriptionController(ISubscriptionService subscriptionService, IEventService eventService, IMapper mapper)
+        public SubscriptionController(ISubscriptionService subscriptionService, IMapper mapper)
         {
-            this.subscriptionService = subscriptionService;
-            this.eventService = eventService;
+            this.subscriptionService = subscriptionService;          
             this.mapper = mapper;
         }
       
@@ -31,7 +29,7 @@ namespace Eventor.Controllers
             var subscription = new SubscriptionDTO
             {
                 UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                EventId = eventService.GetById(id).Id,
+                EventId = id,
                 AreNotificationsEnabled = true
             };
 

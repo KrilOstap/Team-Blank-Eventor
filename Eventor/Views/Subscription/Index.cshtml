@@ -11,11 +11,11 @@
             <div class="col-md-4 center-block d-flex align-items-center">
                 @if (!string.IsNullOrEmpty(@subscription.Event.ImagePath))
                 {
-                    <img class="card-img-top sub-card" src="~/Images/Events/@subscription.Event.ImagePath" alt="@subscription.Event.Title">
+                    <img class="card-img-top w-75 sub-card" src="~/Images/Events/@subscription.Event.ImagePath" alt="@subscription.Event.Title">
                 }
                 else
                 {
-                    <img  class="card-img-top sub-card" src="~/Images/content/default.png" alt="Card image cap">
+                    <img class="card-img-top w-75 sub-card" src="~/Images/content/default.png" alt="Card image cap">
                 }
             </div>
             <div class="col-md-4">

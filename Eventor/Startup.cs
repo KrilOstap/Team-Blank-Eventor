@@ -92,7 +92,7 @@ namespace Eventor
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            CreateRole(services.BuildServiceProvider()).Wait();
+            CreateRoles(services.BuildServiceProvider()).Wait();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,7 +125,7 @@ namespace Eventor
           
         }
 
-        public async Task CreateRole(IServiceProvider serviceProvider)
+        public async Task CreateRoles(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();

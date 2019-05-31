@@ -18,6 +18,6 @@ namespace Eventor.Models
 
         public string Password { get; set; }
 
-        public bool LogginFailed { get; set; }
+        public bool LogginFailed { get; set; }     
     }
 }

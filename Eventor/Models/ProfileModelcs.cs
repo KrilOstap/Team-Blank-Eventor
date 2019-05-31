@@ -18,6 +18,8 @@ namespace Eventor.Models
 
         public bool IsOwner { get; set; }
 
+        public string ImagePath { get; set; }
+
         public IEnumerable<EventDTO> Events { get; set; }
     }
 }

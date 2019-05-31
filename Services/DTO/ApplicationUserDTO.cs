@@ -15,5 +15,7 @@ namespace Services.DTO
         public string Email { get; set; }
 
         public bool AppliedForPromotion { get; set; }
+
+        public string ImagePath { get; set; }
     }
 }

@@ -59,6 +59,7 @@ namespace Eventor.Data.Repositories
             user.FirstName = item.FirstName;
             user.LastName = item.LastName;
             user.AppliedForPromotion = item.AppliedForPromotion;
+            user.ImagePath = item.ImagePath;
             db.ApplicationUsers.Update(user);
         }
        

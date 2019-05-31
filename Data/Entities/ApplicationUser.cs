@@ -16,6 +16,8 @@ namespace Eventor.Data.Entities
 
         public bool AppliedForPromotion { get; set; }
 
+        public string ImagePath { get; set; }
+
         ICollection<Event> Events { get; set; }
 
         ICollection<Subscription> Subscriptions { get; set; }
