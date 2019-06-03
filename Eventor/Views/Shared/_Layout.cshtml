@@ -20,51 +20,51 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-toggleable-lg navbar-dark box-shadow fixed-top">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Eventor</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse">
+			<div class="container">
+				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/content/favicon-32x32.png"></a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+			aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+				<div class="navbar-collapse collapse">
 
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Event" asp-action="Index">Events</a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Subscription" asp-action="Index"
-                                   asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Subscriptions</a>
-                            </li>
-                            @if (User.IsInRole("Organizer"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-controller="User" asp-action="Profile"
-                                       asp-route-organizerId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
-                                </li>
-                            }
-                            else
-                            {
-                                @if (!User.IsInRole("Admin"))
-	                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="PromoteToOrganizer">Become an Organizer</a>
-                                </li>
-	                            }
-                            }
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-controller="User" asp-action="ManageUsers">Manage Users</a>
-                                </li>
-                            }
-                        }
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link text-light" asp-area="" asp-controller="Event" asp-action="Index">Events</a>
+						</li>
+						@if (User.Identity.IsAuthenticated)
+						{
+							<li class="nav-item">
+								<a class="nav-link text-light" asp-area="" asp-controller="Subscription" asp-action="Index"
+								   asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Subscriptions</a>
+							</li>
+							@if (User.IsInRole("Organizer"))
+							{
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-controller="User" asp-action="Profile"
+									   asp-route-organizerId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
+								</li>
+							}
+							else
+							{
+								@if (!User.IsInRole("Admin"))
+								{
+									<li class="nav-item">
+										<a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="PromoteToOrganizer">Become an Organizer</a>
+									</li>
+								}
+							}
+							@if (User.IsInRole("Admin"))
+							{
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-controller="User" asp-action="ManageUsers">Manage Users</a>
+								</li>
+							}
+						}
+					</ul>
+					<partial name="_LoginPartial" />
+				</div>
+			</div>
         </nav>
 
 
