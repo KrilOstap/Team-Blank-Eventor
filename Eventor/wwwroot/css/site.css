@@ -211,3 +211,7 @@ footer a {
 .sub-card {
     margin: 15px 0 15px 0;
 }
+
+.nav-item{
+	margin-right: 8px;
+}
